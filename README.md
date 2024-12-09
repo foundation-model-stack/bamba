@@ -65,6 +65,23 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
 
 ## Fine-tuning
 
+## Quantization
+We can create a (FP8) quantized model using [`fms-model-optimizer`](https://github.com/foundation-model-stack/fms-model-optimizer/), which will make the storage and inference even more efficient.
+```python
+python -m fms_mo.run_quant \
+    --model_name_or_path <"path_to_original_model"> \
+    --quant_method fp8 \
+    --torch_dtype bfloat16 \
+    --output_dir <"path_to_save_new_model">
+```
+Model size comparison before and after FP8:
+||original|quantized |
+|:----:|----:|----:|
+|memory (total)|39.12 GB|10.83 GB| 
+|memory (break-down)|`torch.float32` 39.12 GB|`torch.bfloat16` 2.10 GB<br>`torch.float8_e4m3fn`    8.73 GB|
+
+More details about `fms-model-optimizer` can be found [here](https://github.com/foundation-model-stack/fms-model-optimizer/tree/main/examples/FP8_QUANT#quickstart).
+
 ## Evaluation
 
 

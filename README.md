@@ -65,6 +65,8 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
 
 ## Fine-tuning
 
+This [example](./tuning/Fine-tuning.md) shows how to fine tune the bamba model for a specific task using [SFT Trainer](https://huggingface.co/docs/trl/en/sft_trainer#supervised-fine-tuning-trainer).
+
 ## Evaluation
 
 

@@ -57,6 +57,10 @@ In particular, the dataloader is:
 
 The code for the data loader in Bamba is available [here](https://github.com/foundation-model-stack/fms-fsdp/blob/mamba-new/fms_fsdp/utils/dataset_utils.py), with a constructor function available [here](https://github.com/foundation-model-stack/fms-fsdp/blob/mamba-new/fms_fsdp/utils/dataloader_utils.py#L60)
 The constructor returns a PyTorch DataLoader, making it easy to use for other training runs.
+A graphical overview of Bamba's dataloader structure is below:
+<p align="center">
+<img src="loader_example.jpg", width="600"/>
+</p>
 
 We are currently working on contributing our dataloader back into PyTorch. 
 More information on our custom dataloader can be found here (TODO).
@@ -64,7 +68,9 @@ More information on our custom dataloader can be found here (TODO).
 ## Reproducing Bamba Training
 
 To reproduce the exact sequence of training data seen by Bamba, you must use the provided data as-is, without modifying directory structures or file names.
-The number of gpus used for training (TODO) must also match.
+The number of tokens per batch must also be TODO million.
+For training on fewer than TODO GPUs, you can increase `num_workers` and `batch_size` to compensate, and the data sequence will remain unchanged.
+If batches at the adjusted "batch_size" become too large to fit in GPU, gradient accumulation with smaller `batch_size` will also keep the data sequence preserved, so long as total tokens per step remains at TODO million.
 
 The dataloader constructor uses a config file to construct the data pipeline stages. Bamba uses the following values:
 ```python
@@ -86,8 +92,10 @@ class config:
     eol_token = None
     strip_tokens: str = ""
     logical_shards = TODO
-    num_workers = TODO
-    batch_size = TODO
+    num_workers = [YOUR_WORKER_COUNT]
+    batch_size = [YOUR_BATCH_SIZE]
     seed = TODO
 ```
+
+TODO: annealing???
 

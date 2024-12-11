@@ -47,7 +47,7 @@ In particular, the dataloader is:
 - Distributed: built-in dataset sharding at the document level, with no communication required between workers
 - Rescalable: users can save and load checkpoints to different numbers of workers
 - Streaming: each worker maintains a single open file at a time, exhausting it before opening the next, minimizing overhead
-- Lightweight: a custom random walk generator performs document shuffling with zero additional overhead
+- Lightweight: a custom random walk generator shuffles hundreds of millions of documents with zero additional overhead
 - Asynchronous: data loading and checkpointing do not block model training
 - Flexible: users can add support for arbitrary data file types by extending a FileHandler class stub with basic `open`, `length`, `get`, and `slice` operations. The dataloader also supports both tokenized and untokenized input documents.
 - Modular: data pipelines are composed of individual processing stages that can be added or removed according to the user's individual needs

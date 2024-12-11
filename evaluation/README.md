@@ -9,7 +9,7 @@ pip install -r requirements_evaluation.txt
 ## Gateway scripts
 
 ### Running
-`evaluation/runner.py` is used as orchastrator for (currently) (lm-eval-harness)[https://github.com/EleutherAI/lm-evaluation-harness] using LSF.
+`evaluation/runner.py` is used as orchastrator for (currently) [lm-eval-harness](https://github.com/EleutherAI/lm-evaluation-harness) using LSF.
 
 It will probably only work for you while running on the CCC.
 

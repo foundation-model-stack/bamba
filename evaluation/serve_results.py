@@ -30,9 +30,18 @@ if __name__ == "__main__":
     st.title("🚀🚀🚀 Evals for Bamba model release 🚀🚀🚀")
 
     styled_df = df.style.background_gradient(cmap="Greens").format(format_dict)
-    st.dataframe(styled_df, use_container_width=True, hide_index=True, height=550)
+    column_order = [col for col in df.columns if col not in ["model", "MWR"]]
+    column_order.insert(0, "MWR")
+    column_order.insert(0, "model")
+    st.dataframe(
+        styled_df,
+        use_container_width=True,
+        hide_index=True,
+        height=550,
+        column_order=column_order,
+    )
 
-    st.write("* results taken from paper")
+    st.write("*results taken from paper")
 
     st.markdown(
         """

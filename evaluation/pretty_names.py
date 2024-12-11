@@ -1,0 +1,16 @@
+name2tag = {
+    "mmlu": "MMLU",
+    "hellaswag": "Hellaswag",
+    "winogrande": "Winogrande",
+    "piqa": "Piqa",
+    "openbookqa": "OpenbookQA",
+    "arc_challenge": "ARC-C",
+    "truthfulqa_mc2": "TruthfulQA",
+    "gsm8k": "GSM8K",
+    "bbh": "BBH",
+    "musr": "MuSR",
+    "mmlu_pro": "MMLU-PRO",
+    "gpqa": "GPQA",
+    "math_hard": "MATH Lvl 5",
+    "ifeval": "IFEval",
+}

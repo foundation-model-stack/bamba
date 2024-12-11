@@ -101,6 +101,9 @@ def get_results_df(res_dir_paths, results_from_papers_path):
         res_df = handle_duplicates(res_df)
 
     res_df["score"] = res_df["score"].round(2)
+    res_df["model"] = res_df["model"].apply(
+        lambda x: x.replace("/dccstor/fme/users/yotam/models/", "ibm-fms/")
+    )
 
     def calculate_win_rate(series):
         assert len(series) > 1, "no meaning for a win rate with only one object"
@@ -166,4 +169,3 @@ if __name__ == "__main__":
             args.output_dir_path, "results_from_papers.csv"
         ),
     )
-

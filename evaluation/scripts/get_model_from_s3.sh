@@ -13,7 +13,7 @@ BUCKET_NAME="platform-vela-data"
 ENDPOINT_URL="https://s3.us-east.cloud-object-storage.appdomain.cloud"
 
 # Call the Python script with the arguments
-python evaluation/get_model_from_s3.py \
+.venv/bin/python evaluation/get_model_from_s3.py \
   --prefix "$PREFIX" \
   --local_path "$LOCAL_PATH" \
   --bucket_name "$BUCKET_NAME" \

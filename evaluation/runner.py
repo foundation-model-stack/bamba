@@ -24,63 +24,79 @@ def parse_args():
         "--benchmarks",
         nargs="+",
         default=["HFV2"],
-        help="Task name (default: leaderboard)",
+        help="List of benchmarks to evaluate on. (default: ['HFV2'])",
     )
     parser.add_argument(
         "--only_subtasks_to_run",
         nargs="+",
         default=[],
-        help="Task name (default: leaderboard)",
+        help="List of specific subtasks to run within the chosen benchmarks. If empty, runs all subtasks. (default: [])",
     )
 
     parser.add_argument(
         "--output_dir_path",
         default="debug",
-        help="Output directory path",
+        help="Path to the directory where evaluation results and logs will be saved. (default: 'debug')",
     )
 
-    parser.add_argument("--memory", default="64g", help="Memory request (default: 64g)")
     parser.add_argument(
-        "--req_gpu", default="a100_80gb", help="Required GPU type (default: a100_80gb)"
+        "--memory",
+        default="64g",
+        help="Amount of memory to request for the job. (default: '64g')",
     )
-    parser.add_argument("--cores", default="8+1", help="Number of cores (default: 8+1)")
     parser.add_argument(
-        "--queue", default="nonstandard", help="Queue name (default: nonstandard)"
+        "--req_gpu",
+        default="a100_80gb",
+        help="Type of GPU to request for the job. (default: 'a100_80gb')",
+    )
+    parser.add_argument(
+        "--cores",
+        default="8+1",
+        help="Number of CPU cores to request. (default: '8+1')",
+    )
+    parser.add_argument(
+        "--queue",
+        default="nonstandard",
+        help="Name of the queue to submit the job to. (default: 'nonstandard')",
     )
     parser.add_argument(
         "--python_executable",
         default="python",
-        help="Path to Python executable (default: python)",
+        help="Path to the Python executable to use. (default: 'python')",
     )
 
     parser.add_argument(
         "--models",
         nargs="+",
         default=[],
-        help="List of models to evaluate",
+        help="List of model names to evaluate. (default: [])",
     )
 
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
+        help="Limit the number of examples to evaluate per task. Useful for debugging. (default: None, meaning no limit)",
     )
 
     parser.add_argument(
         "--batch_size",
         type=int,
         default=4,
+        help="Batch size to use during evaluation. (default: 4)",
     )
 
     parser.add_argument(
         "--fp_precision",
         type=int,
         default=16,
+        help="Floating-point precision to use (e.g., 16 for fp16, 32 for fp32). (default: 16)",
     )
 
     parser.add_argument(
         "--debug_run_single_task_per_model",
         action="store_true",
+        help="If set, runs only one subtask per model for quick debugging. (default: False)",
     )
 
     args = parser.parse_args()

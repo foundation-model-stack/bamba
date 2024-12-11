@@ -1,3 +1,5 @@
+# .venv/bin/streamlit run evaluation/serve_results.py --server.port 8091 -- --output_dir_path /dccstor/eval-research/code/bamba/evaluation/evaluation_results
+
 import os
 
 import pandas as pd

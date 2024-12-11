@@ -1,5 +1,7 @@
+import argparse
 import glob
 import json
+import os
 
 import pandas as pd
 from analysis_utils import handle_duplicates
@@ -116,16 +118,32 @@ def main(res_dirs):
     return df_pivot_score
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run leaderboard evaluation.")
+
+    parser.add_argument(
+        "--output_dir_path",
+        default="debug",
+        help="Output directory path",
+    )
+
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
+    args = parse_args()
     df = main(
         res_dirs=[
-            "/dccstor/eval-research/code/lm-evaluation-harness/output/Bamba_eval",
-            "/dccstor/eval-research/code/lm-evaluation-harness/output/Bamba_eval_last_models",
-            # "output/241205_HFV2",
-            # "output/241205_Other",
-            # "output/241205_HFV1",
-            # "output/251205_HFV2",
-            # "output/251205_more_gsm8k",
+            os.path.join(args.output_dir_path, res_dir)
+            for res_dir in [
+                "Bamba_eval",
+                "Bamba_eval_last_models",
+                # "output/241205_HFV2",
+                # "output/241205_Other",
+                # "output/241205_HFV1",
+                # "output/251205_HFV2",
+                # "output/251205_more_gsm8k",
+            ]
         ]
     )
 
@@ -173,7 +191,6 @@ if __name__ == "__main__":
         - TruthfulQA (https://arxiv.org/abs/2109.07958) - a test to measure a model's propensity to reproduce falsehoods commonly found online. Note: TruthfulQA is technically a 6-shot task in the Harness because each example is prepended with 6 Q/A pairs, even in the 0-shot setting.
         - Winogrande (https://arxiv.org/abs/1907.10641) - an adversarial and difficult Winograd benchmark at scale, for commonsense reasoning.
         - GSM8k (https://arxiv.org/abs/2110.14168) - diverse grade school math word problems to measure a model's ability to solve multi-step mathematical reasoning problems.
-        -
         """
     )
 

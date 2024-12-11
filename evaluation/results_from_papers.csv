@@ -1,0 +1,15 @@
+scenario,nvidia/mamba2-hybrid-8b-3t-4k*,EleutherAI/pythia-6.9b
+MMLU,53.6,
+Hellaswag,77.69,
+Winogrande,71.27,
+Piqa,79.65,
+OpenbookQA,42.8,
+ARC-C,47.7,
+TruthfulQA,38.72,
+IFEval,,22.81
+BBH,,5.88
+MATH Lvl 5,,0.83
+GPQA,,0.22
+MuSR,,3.81
+MMLU-PRO,,1.63
+GSM8K,,

@@ -1,3 +1,0 @@
-streamlit
-boto3
-tqdm

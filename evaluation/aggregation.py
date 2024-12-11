@@ -102,6 +102,23 @@ def get_results_df(res_dir_paths, results_from_papers_path):
 
     res_df["score"] = res_df["score"].round(2)
 
+    def calculate_win_rate(series):
+        assert len(series) > 1, "no meaning for a win rate with only one object"
+
+        def win_rate(x):
+            win_count = sum(1 for value in series if x > value)
+            return win_count / (len(series) - 1)
+
+        return series.transform(win_rate)
+
+    res_df["wr"] = res_df.groupby(["scenario"])["score"].transform(calculate_win_rate)
+
+    mean_df = pd.DataFrame(columns=res_df.columns)
+    mean_df = res_df.groupby(["model"]).agg({"wr": "mean"}).reset_index()
+    mean_df["score"] = mean_df["wr"]
+    mean_df["scenario"] = "MWR"
+    res_df = pd.concat([res_df, mean_df]).drop(columns=["wr"])
+
     # Pivot the DataFrame
     df_pivot_score = res_df.pivot(
         index="model", columns="scenario", values=["score"]
@@ -150,56 +167,3 @@ if __name__ == "__main__":
         ),
     )
 
-    # nvidia/mamba2-hybrid-8b-3t-4k from the paper
-    # allenai/OLMo-7B-hf I took the HFV2 results and from HFV1
-    # meta-llama/Llama-2-7b-hf I took the HFV2 results and from HFV1
-    # meta-llama/Llama-3-8B I took the HFV2 results and from HFV1
-    # other models from https://huggingface.co/tiiuae/falcon-mamba-7b after varifying consistency
-
-    try:
-        from lh_eval_api import EvaluationResultsUploader, RunRecord
-    except:
-        raise ImportError(
-            "lh_eval_api is not installed, "
-            "\nwhich is OK if you are not from IBM "
-            "\nif you are: install it with"
-            "\npip install git+ssh://git@github.ibm.com/IBM-Research-AI/lakehouse-eval-api.git@v1.1.10#egg=lh_eval_api"
-        )
-
-    import getpass
-
-    import pandas as pd
-
-    # get your variables
-    benchmark = "Bamba-eval"
-    score_name = ""
-    framework = "LM-Eval_Harness"
-    time = "12021988"
-    is_official = False
-    owner = getpass.getuser()
-
-    # prepare run records
-    run_records = []
-    long_df = df.melt(id_vars="model", var_name="dataset", value_name="score")
-    result_dicts = long_df.to_dict(orient="records")
-    for result in result_dicts:
-        run_records.append(
-            RunRecord(
-                owner=owner,
-                started_at=time,
-                framework=framework,
-                inference_platform="",
-                model_name=result["model"],
-                execution_env="",
-                benchmark=benchmark,
-                dataset=result["dataset"],
-                task="",
-                run_params={"framework": framework},
-                score=result["score"],
-                score_name=score_name,
-            )
-        )
-
-    # upload
-    uploader = EvaluationResultsUploader(runs=run_records)
-    uploader.upload()

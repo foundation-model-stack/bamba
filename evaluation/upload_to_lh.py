@@ -30,7 +30,9 @@ if __name__ == "__main__":
     benchmark = "Bamba-eval"
     score_name = ""
     framework = "LM-Eval_Harness"
-    time = "12021988"
+    import datetime
+
+    time = datetime.datetime(2024, 12, 11, 8, 53, 38, 409455)
     is_official = False
     owner = getpass.getuser()
 

@@ -68,7 +68,7 @@ More information on our custom dataloader can be found here (TODO).
 ## Reproducing Bamba Training
 
 To reproduce the exact sequence of training data seen by Bamba, you must use the provided data as-is, without modifying directory structures or file names.
-The number of tokens per batch must also be 1.6 million (1,572,864 to be precise).
+The number of tokens per batch must also be 1.6 million (1,572,864 to be precise - 384 sequences of length 4096).
 Bamba was trained on 192 GPUs in parallel.
 For training on fewer than 192 GPUs, you can increase `num_workers` and `batch_size` to compensate, and the data sequence will remain unchanged.
 For example, using 64 GPUs with `num_workers=3, batch_size=6` will train identically to a model on 96 GPUs with `num_workers=2, batch_size=4`. 

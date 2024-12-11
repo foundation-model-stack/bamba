@@ -1,250 +1,14 @@
 import glob
 import json
 
-import numpy as np
 import pandas as pd
-
-
-from loguru import logger
+from analysis_utils import handle_duplicates
+from metrics_mapping import scenario2metric
+from normalizations import get_hfv2_noramlized_scores, hfv2_tasks, needs_normalization
+from pretty_names import name2tag
 
 # python -m debugpy --connect cccxl010.pok.ibm.com:1222 /dccstor/eval-research/code/lm-evaluation-harness/.vscode/launch.json
-
 # streamlit run /dccstor/eval-research/code/lm-evaluation-harness/output/analysis.py --server.port 8090
-# code from https://colab.research.google.com/drive/1-aPrFJjwdifhVLxzJcsYXeebqNi_5vaw?usp=sharing
-
-
-# Normalization function
-def normalize_within_range(value, lower_bound=0, higher_bound=1):
-    return (np.clip(value - lower_bound, 0, None)) / (higher_bound - lower_bound) * 100
-
-
-bbh_subtasks = {
-    "sports_understanding": 2,
-    "tracking_shuffled_objects_three_objects": 3,
-    "navigate": 2,
-    "snarks": 2,
-    "date_understanding": 6,
-    "reasoning_about_colored_objects": 18,
-    "object_counting": 19,
-    "logical_deduction_seven_objects": 7,
-    "geometric_shapes": 11,
-    "web_of_lies": 2,
-    "movie_recommendation": 6,
-    "logical_deduction_five_objects": 5,
-    "salient_translation_error_detection": 6,
-    "disambiguation_qa": 3,
-    "temporal_sequences": 4,
-    "hyperbaton": 2,
-    "logical_deduction_three_objects": 3,
-    "causal_judgement": 2,
-    "formal_fallacies": 2,
-    "tracking_shuffled_objects_seven_objects": 7,
-    "ruin_names": 6,
-    "penguins_in_a_table": 5,
-    "boolean_expressions": 2,
-    "tracking_shuffled_objects_five_objects": 5,
-}
-
-musr_subtasks = {"murder_mysteries": 2, "object_placements": 5, "team_allocation": 3}
-
-
-def get_noramlized_scores(task_name, data):
-    if task_name == "bbh":
-        # Normalize BBH subtasks scores
-        bbh_scores = []
-        for subtask, num_choices in bbh_subtasks.items():
-            subtask_key = f"leaderboard_bbh_{subtask}"
-            if subtask_key in data:
-                bbh_raw_score = data[subtask_key]["acc_norm,none"]
-                lower_bound = 1 / num_choices
-                normalized_score = normalize_within_range(
-                    bbh_raw_score, lower_bound, 1.0
-                )
-                bbh_scores.append(normalized_score)
-
-        # Average BBH score
-        score = sum(bbh_scores) / len(bbh_scores)
-
-    elif task_name == "math_hard":
-        # Calculate the MATH score
-        math_raw_score = data["leaderboard_math_hard"]["exact_match,none"]
-        score = normalize_within_range(math_raw_score, 0, 1.0)
-
-    elif task_name == "gpqa":
-        # Normalize GPQA scores
-        gpqa_raw_score = data["leaderboard_gpqa"]["acc_norm,none"]
-        score = normalize_within_range(gpqa_raw_score, 0.25, 1.0)
-
-    elif task_name == "mmlu_pro":
-        # Normalize MMLU PRO scores
-        mmlu_pro_raw_score = data["leaderboard_mmlu_pro"]["acc,none"]
-        score = normalize_within_range(mmlu_pro_raw_score, 0.1, 1.0)
-
-    elif task_name == "ifeval":
-        # Compute IFEval
-        ifeval_inst_score = (
-            data["leaderboard_ifeval"]["inst_level_strict_acc,none"] * 100
-        )
-        ifeval_prompt_score = (
-            data["leaderboard_ifeval"]["prompt_level_strict_acc,none"] * 100
-        )
-        # Average IFEval scores
-        score = (ifeval_inst_score + ifeval_prompt_score) / 2
-
-    elif task_name == "musr":
-        # Normalize MUSR scores
-        musr_scores = []
-
-        for subtask, num_choices in musr_subtasks.items():
-            musr_raw_score = data[f"leaderboard_musr_{subtask}"]["acc_norm,none"]
-            lower_bound = 1 / num_choices
-            normalized_score = normalize_within_range(musr_raw_score, lower_bound, 1.0)
-            musr_scores.append(normalized_score)
-
-        score = sum(musr_scores) / len(musr_scores)
-
-    else:
-        raise NotImplementedError(f"Not supproting task_name {task_name}")
-
-    return score
-
-
-def handle_duplicates(res_df):
-    """
-    Handles duplicate entries in a DataFrame based on 'model' and 'scenario' columns.
-
-    Args:
-        res_df: The input DataFrame.
-
-    Returns:
-        The DataFrame with duplicates removed if scores are consistent,
-        otherwise raises a ValueError.
-    """
-
-    if len(res_df[res_df.duplicated(subset=["model", "scenario"])]) > 0:
-        duplicates = res_df[
-            res_df.duplicated(subset=["model", "scenario"], keep=False)
-        ]  # Keep all duplicates for comparison
-
-        for index, row in duplicates.iterrows():  # Iterate efficiently
-            model = row["model"]
-            scenario = row["scenario"]
-            score = row["score"]
-            other_scores = duplicates[
-                (duplicates["model"] == model)
-                & (duplicates["scenario"] == scenario)
-                & (duplicates.index != index)
-            ]["score"].tolist()
-
-            if not all(
-                (abs(s - score) < (s / 100))
-                for s in other_scores  # difference is smaller than 1%
-            ):  # Check consistency across *all* duplicates, not just pairwise
-                raise ValueError(
-                    f"Inconsistent scores found for model '{model}' and scenario '{scenario}'. Scores: {score}, {other_scores}"
-                )
-
-        res_df = res_df.drop_duplicates(
-            subset=["model", "scenario"], keep="first"
-        )  # Remove duplicates, keeping the first occurrence
-
-    return res_df
-
-
-hfv2_tasks = [
-    "bbh",
-    "musr",
-    "mmlu_pro",
-    "gpqa",
-    "math_hard",
-    "ifeval",
-]
-
-name2tag = {
-    "mmlu": "MMLU",
-    "hellaswag": "Hellaswag",
-    "winogrande": "Winogrande",
-    "piqa": "Piqa",
-    "openbookqa": "OpenbookQA",
-    "arc_challenge": "ARC-C",
-    "truthfulqa_mc2": "TruthfulQA",
-    "gsm8k": "GSM8K",
-    "bbh": "BBH",
-    "musr": "MuSR",
-    "mmlu_pro": "MMLU-PRO",
-    "gpqa": "GPQA",
-    "math_hard": "MATH Lvl 5",
-    "ifeval": "IFEval",
-}
-
-scenario2metric = {
-    # HFV1 https://huggingface.co/docs/leaderboards/en/open_llm_leaderboard/archive
-    "arc_challenge": "acc_norm",
-    "hellaswag": "acc_norm",
-    "truthfulqa_mc2": "acc",
-    "winogrande": "acc",
-    "gsm8k": "exact_match,strict-match",  # this was changed as a later version of lmeval acc->exact_match,strict-match
-    "mmlu_abstract_algebra": "acc",
-    "mmlu_anatomy": "acc",
-    "mmlu_astronomy": "acc",
-    "mmlu_business_ethics": "acc",
-    "mmlu_clinical_knowledge": "acc",
-    "mmlu_college_biology": "acc",
-    "mmlu_college_chemistry": "acc",
-    "mmlu_college_computer_science": "acc",
-    "mmlu_college_mathematics": "acc",
-    "mmlu_college_medicine": "acc",
-    "mmlu_college_physics": "acc",
-    "mmlu_computer_security": "acc",
-    "mmlu_conceptual_physics": "acc",
-    "mmlu_econometrics": "acc",
-    "mmlu_electrical_engineering": "acc",
-    "mmlu_elementary_mathematics": "acc",
-    "mmlu_formal_logic": "acc",
-    "mmlu_global_facts": "acc",
-    "mmlu_high_school_biology": "acc",
-    "mmlu_high_school_chemistry": "acc",
-    "mmlu_high_school_computer_science": "acc",
-    "mmlu_high_school_european_history": "acc",
-    "mmlu_high_school_geography": "acc",
-    "mmlu_high_school_government_and_politics": "acc",
-    "mmlu_high_school_macroeconomics": "acc",
-    "mmlu_high_school_mathematics": "acc",
-    "mmlu_high_school_microeconomics": "acc",
-    "mmlu_high_school_physics": "acc",
-    "mmlu_high_school_psychology": "acc",
-    "mmlu_high_school_statistics": "acc",
-    "mmlu_high_school_us_history": "acc",
-    "mmlu_high_school_world_history": "acc",
-    "mmlu_human_aging": "acc",
-    "mmlu_human_sexuality": "acc",
-    "mmlu_international_law": "acc",
-    "mmlu_jurisprudence": "acc",
-    "mmlu_logical_fallacies": "acc",
-    "mmlu_machine_learning": "acc",
-    "mmlu_management": "acc",
-    "mmlu_marketing": "acc",
-    "mmlu_medical_genetics": "acc",
-    "mmlu_miscellaneous": "acc",
-    "mmlu_moral_disputes": "acc",
-    "mmlu_moral_scenarios": "acc",
-    "mmlu_nutrition": "acc",
-    "mmlu_philosophy": "acc",
-    "mmlu_prehistory": "acc",
-    "mmlu_professional_accounting": "acc",
-    "mmlu_professional_law": "acc",
-    "mmlu_professional_medicine": "acc",
-    "mmlu_professional_psychology": "acc",
-    "mmlu_public_relations": "acc",
-    "mmlu_security_studies": "acc",
-    "mmlu_sociology": "acc",
-    "mmlu_us_foreign_policy": "acc",
-    "mmlu_virology": "acc",
-    "mmlu_world_religions": "acc",
-    # Other
-    "piqa": "acc_norm",
-    "openbookqa": "acc_norm",
-}
 
 
 def main(res_dirs):
@@ -259,8 +23,8 @@ def main(res_dirs):
 
             all_res_entries = list(res_dict.keys())
 
-            if (
-                "leaderboard" in all_res_entries[0]
+            if (  # HFV2 leaderboard should be normalized
+                needs_normalization(all_res_entries)
             ):  # all entries in the leaderboard has this prefix
                 for hfv2_task in hfv2_tasks:
                     if " " in res_dict.get(f"leaderboard_{hfv2_task}", {}).keys():
@@ -268,7 +32,7 @@ def main(res_dirs):
                         continue
 
                     if any([hfv2_task in entry for entry in all_res_entries]):
-                        score = get_noramlized_scores(
+                        score = get_hfv2_noramlized_scores(
                             task_name=hfv2_task, data=res_dict
                         )
 
@@ -282,7 +46,6 @@ def main(res_dirs):
 
             else:
                 for scenario, res in res_dict.items():
-                    scenario = scenario.replace("leaderboard_", "")
                     # dropping the aggregate here
                     if scenario not in scenario2metric.keys():
                         continue
@@ -294,7 +57,7 @@ def main(res_dirs):
                         and "stderr" not in key
                     ]
 
-                    assert len(metric_key) == 1, "More than one metric?"
+                    assert len(metric_key) == 1, "More/Less than one metric?"
 
                     res_list.append(
                         {
@@ -309,18 +72,17 @@ def main(res_dirs):
     if len(res_df[res_df.duplicated(subset=["model", "scenario"])]) > 0:
         res_df = handle_duplicates(res_df)
 
-    # aggregating scenarios
+    # TODO: aggregating scenarios
     multi_subset_scenarios = ["mmlu"]
     scenario_to_avoid = "mmlu_pro"
-
     for scenario_name in multi_subset_scenarios:
         res_df["scenario"] = res_df["scenario"].apply(
             lambda x: scenario_name
             if (scenario_name + "_" in x and x != scenario_to_avoid)
             else x
         )
-
     res_df = res_df.groupby(["model", "scenario"]).agg({"score": "mean"}).reset_index()
+
     res_df["score"] = res_df["score"] * 100
 
     df_from_papers = pd.read_csv("output/results_from_papers.csv")
@@ -344,7 +106,6 @@ def main(res_dirs):
     df_pivot_score = res_df.pivot(
         index="model", columns="scenario", values=["score"]
     ).reset_index()
-    # df_pivot_stderr = res_df.pivot(index='model', columns='scenario', values='stderr').reset_index()
     flat_index = [
         "model" if level0 == "model" else level1
         for level0, level1 in df_pivot_score.columns

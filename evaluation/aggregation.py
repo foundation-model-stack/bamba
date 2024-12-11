@@ -10,9 +10,6 @@ from pretty_names import name2tag
 
 from evaluation.aggregation_utils import handle_duplicates
 
-# python -m debugpy --connect cccxl010.pok.ibm.com:1222 /dccstor/eval-research/code/lm-evaluation-harness/.vscode/launch.json
-# streamlit run /dccstor/eval-research/code/lm-evaluation-harness/output/analysis.py --server.port 8090
-
 
 def get_results_df(res_dir_paths, results_from_papers_path):
     res_list = []
@@ -75,7 +72,7 @@ def get_results_df(res_dir_paths, results_from_papers_path):
     if len(res_df[res_df.duplicated(subset=["model", "scenario"])]) > 0:
         res_df = handle_duplicates(res_df)
 
-    # TODO: aggregating scenarios
+    # TODO: aggregating subtasks
     multi_subset_scenarios = ["mmlu"]
     scenario_to_avoid = "mmlu_pro"
     for scenario_name in multi_subset_scenarios:

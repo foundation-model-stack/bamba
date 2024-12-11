@@ -74,7 +74,7 @@ For training on fewer than 192 GPUs, you can increase `num_workers` and `batch_s
 For example, using 64 GPUs with `num_workers=3, batch_size=6` will train identically to a model on 96 GPUs with `num_workers=2, batch_size=4`. 
 If batches at the adjusted `batch_size` become too large to fit in GPU, gradient accumulation with smaller `batch_size` will also keep the data sequence preserved, so long as total tokens per step remains at 1.6 million.
 
-The dataloader constructor uses a config file to construct the data pipeline stages. Bamba uses the following values:
+The dataloader constructor takes a config argument and uses the config object to construct the data pipeline stages. Bamba uses the following values:
 ```python
 from dataclasses import dataclass
 

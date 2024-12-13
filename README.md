@@ -88,4 +88,52 @@ More details about `fms-model-optimizer` can be found [here](https://github.com/
 ## Evaluation
 
 
+## Llama.cpp
+There is preliminary work to enable running Bamba architecture models using [llama.cpp](https://github.com/ggerganov/llama.cpp). This is work-in-progress, so should only be used as a guide for the adventurous!
 
+### Known Limitations
+
+* Currently, inference is only supported on CPUs
+* Models quantized with `llama-quantize` exhibit bad performance
+
+### Setup
+To enable Bamba support, you'll need to build from source using [Gabe's fork](https://github.com/gabe-l-hart/llama.cpp/tree/BambaArchitecture).
+
+```sh
+git clone --branch BambaArchitecture git@github.com:gabe-l-hart/llama.cpp.git
+cd llama.cpp
+mkdir build
+cd build
+# NOTE: To build with debug symbols and extra logging, use CMAKE_BUILD_TYPE=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j
+```
+
+### Conversion to GGUF
+You can use a pre-converted GGUF file from Huggingface (e.g. [bamba-9b.gguf](https://huggingface.co/ibm-fms/Bamba-9B/blob/main/bamba-9b.gguf)). If one doesn't exist, you can use the [convert_hf_to_gguf.py](https://github.com/gabe-l-hart/llama.cpp/blob/BambaArchitecture/convert_hf_to_gguf.py) script from Gabe's fork to perform the conversion manually.
+
+```sh
+# Install the python dependencies
+cd /path/to/llama.cpp
+pip install -r requirements/requirements-convert_hf_to_gguf.txt
+
+# Perform the conversion
+./convert_hf_to_gguf.py /path/to/bamba-model --outfile /path/to/bamba-model/bamba-model.gguf
+```
+
+### Run with llama-cli
+
+```sh
+# Run the model with no layers on the GPU (CPU-only)
+cd /path/to/llama.cpp
+./bin/llama-cli  -ngl 0 -m /path/to/bamba-model/bamba-model.gguf -p "Tell me a story about a developer and their dog"
+```
+
+### Quantization with llama-quantize
+You can (optionally) quantize the GGUF model using `llama.cpp`'s built in quantizaiton tool `llama-quantize`.
+
+```sh
+# Run the quantization (see llama-quantize --help for all quant types)
+cd /path/to/llama.cpp
+./build/bin/llama-quantize /path/to/bamba-model/bamba-model.gguf Q4_K_M
+```

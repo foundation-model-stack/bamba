@@ -3,3 +3,4 @@ boto3
 tqdm
 matplotlib
 pandas
+loguru

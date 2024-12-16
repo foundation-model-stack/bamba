@@ -6,10 +6,11 @@
 
 <p align="center">
         🤗 <a href="https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab"> Bamba on Hugging Face</a>&nbsp | <a href="https://github.com/foundation-model-stack/bamba/blob/main/blog/bamba-9b-release.md"> Bamba Blog</a>&nbsp
-<br>
+<be>
 
-Bamba is a repository for training and using [Bamba](https://huggingface.co/ibm-fms/Avengers-Mamba2-9B) models which are based on [Mamba](https://github.com/state-spaces/mamba) models.
+<!--Bamba is a repository for training and using [Bamba](https://huggingface.co/ibm-fms/Avengers-Mamba2-9B) models, which are derived from [Mamba](https://github.com/state-spaces/mamba) models.--> 
 
+Bamba-9B is a decoder-only language model based on the [Mamba-2](https://github.com/state-spaces/mamba) architecture and is designed to handle a wide range of text generation tasks. It is trained from scratch using a two-stage training approach. In the first stage, the model is trained on 2 trillion tokens from the Dolma v1.7 dataset. In the second stage, it undergoes additional training on 200 billion tokens, leveraging a carefully curated blend of high-quality data to further refine its performance and enhance output quality.
 
 ## Installation
 
@@ -28,11 +29,13 @@ git clone https://github.com/Dao-AILab/flash-attention.git
 cd flash-attention && pip install . && cd ..
 ```
 
-
 ## Models
 
 ### Overview
-TODO: add model card here
+
+| Model            | Params       | # Layers | Hidden Dim. | Attention Heads | GQA | KV Heads | Context Length |  Tied Embeddings |
+|-------------------|--------------|----------|-------------|-----------------|-----|----------|----------------|------------------|
+| Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | True |
 
 ### Checkpoints
 We have published our model checkpoints here: TODO: add mamba HF page once public
@@ -43,10 +46,10 @@ You can utilize our newly contributed HF integration to run inference on our Bam
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model = AutoModelForCausalLM.from_pretrained("ibm-fms/Avengers-Mamba2-9B-hf")
-tokenizer = AutoTokenizer.from_pretrained("ibm-fms/Avengers-Mamba2-9B-hf")
+model = AutoModelForCausalLM.from_pretrained("ibm-fms/Bamba-9B")
+tokenizer = AutoTokenizer.from_pretrained("ibm-fms/Bamba-9B")
 
-message = ["TODO: find a prompt here"]
+message = ["I am an LLM and my name is "]
 inputs = tokenizer(message, return_tensors='pt', return_token_type_ids=False)
 response = model.generate(**inputs, max_new_tokens=100, do_sample=True, top_k=50, top_p=0.95)
 print(tokenizer.batch_decode(response, skip_special_tokens=True)[0])

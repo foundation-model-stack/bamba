@@ -99,5 +99,29 @@ class config:
     seed = 2023
 ```
 
-TODO: annealing???
+This config was used to produce the checkpoints trained up to 2T tokens. The final checkpoint is annealed on a different data mixture, with prior dataset checkpoint information dropped (simply remove any file with 'loader' in it from the checkpoint folder). Annealing took place on 160 gpus, with 1,310,720 tokens per batch. For running on fewer GPUs, follow the same logic as above. Use the following config for annealing:
+```python
+from dataclasses import dataclass
 
+@dataclass
+class config:
+    ckpt_load_path = "[YOUR_CHECKPOINT_PATH]"
+    ckpt_save_path = "[YOUR_CHECKPOINT_PATH]"
+    data_path = "[YOUR_DATA_PATH]"
+    file_type = "arrow"
+    col_name = "tokens"
+    datasets = "smollm-corpus/tokens/llama3/cosmopedia-v2,smollm-corpus/tokens/llama3/fineweb-edu-dedup"
+    weights = "0.6,0.4"
+    seq_length = 4096
+    bos_token = None
+    eos_token = 128000
+    bol_token = None
+    eol_token = None
+    strip_tokens: str = ""
+    logical_shards = 960
+    num_workers = 1
+    batch_size = 2
+    seed = 2023
+```
+
+TODO: (re-)implement `--is_resuming` for dataloaders, rather than have users delete the files from the checkpoint folder manually?

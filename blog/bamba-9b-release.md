@@ -89,6 +89,19 @@ Finally, we compare Bamba and Falcon Mamba with SoTA transformer models (Meta Ll
 | IFEval | 15.16 | 31.93 | 12.55 | **44.79** | 16.35 | 21.28 |
 | **Average**    |   10.91   |    14.70       |    14.27     |   21.14        |   13.35   |  **21.79** |
 
+### Safety tasks
+Safety benchmarks are crucial for ensuring AI models generate content that is ethical, inclusive, and non-harmful. We evaluate our model on  well known safety benchmarks such as, Toxingen (focused on detecting toxic language), BBQ, and Ethos (which measures bias and fairness). These benchmarks help us identify and mitigate harmful outputs, ensuring the model avoids generating offensive or discriminatory content. We intend to fix the gaps in safety through comprehensive SFT and DPO approaches.
+
+| Model                 | PopQA (5-shot, generation) | Toxigen (5-shot, logits) | BBQ (5-shot, generation) |
+|------------------------|----------------------------|--------------------------|--------------------------|
+| Bamba-9B              | 20.5                       | 57.4                     | 44.2                     |
+| OLMo-2-1124-7B        | 25.7                       | 63.1                     | 58.4                     |
+| Gemma-2-9b            | 27.3                       | 69.6                     | 59.9                     |
+| Granite-3.0-8b-base   | 27.5                       | 79.9                     | 82.1                     |
+| Llama-3.1-8B          | 28.8                       | 67                       | 60                       |
+| Falcon-mamba-7b       | 19.3                       | 62.1                     | 60.2                     |
+
+
 We invite the community to help improve the model further and identify any fundamental limitations in this inference-efficient model.
 
 ## Inference efficiency

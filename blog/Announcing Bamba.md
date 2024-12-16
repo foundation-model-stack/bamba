@@ -199,6 +199,21 @@ We use PhoneBook retrieval as the task to measure our performance. We extend the
 
 We observe that the context-extended Bamba model performs exceptionally well up to a 16K context length without any tuning, outperforming the original Bamba 9B model, Llama2-7B, and llama3-8B by a large margin and obtaining comparable performance as Llama3.1-8B. At sequence length 32K, LLama3.1 achieves the best performing result. However, note that LLama3.1-8B was trained with 128K context length, which incurs a much higher pre-training cost than Bamba. As a next step, we plan to pursue various other approaches to context length extensions and study the performance on more tasks. These long context length extended models will be released as well.
 
+## Summary
+Bamba-9B is a 9-billion parameter hybrid Mamba2 model developed collaboratively by IBM, Princeton, CMU, and UIUC. Trained entirely on open datasets, it achieves significant inference efficiency, demonstrating a 2.5x increase in throughput and a 2x reduction in latency compared to standard transformers when benchmarked in the vLLM framework.
+
+Key Takeaways:
+
+* **Inference Efficiency**: Bamba-9B delivers substantial improvements in throughput and latency, enhancing real-time application performance, with up to 5x efficiency gains in long-sequence inference.
+
+* **Competitive Benchmarks**: Bamba-9B performs competitively against state-of-the-art (SoTA) transformer models like Meta Llama 3.1 8B. It matches their average benchmark performance when excluding math and MMLU tasks, with opportunities to close these gaps through extended training and math-focused datasets.
+
+* **Open Collaboration**: The model's development utilized open data, promoting transparency and reproducibility within the AI community.
+
+* **Broad Integration**: Bamba-9B is fully integrated with popular frameworks like Hugging Face Transformers, vLLM, TRL, and llama.cpp, enabling easy adoption and experimentation.
+
+For more details and access to the model and associated resources, visit the [Bamba GitHub repository](https://github.com/foundation-model-stack/bamba).
+
 ### Future work
 
 There are several directions that we intend to explore and further inference-efficient mamab2 hybrid architectures:

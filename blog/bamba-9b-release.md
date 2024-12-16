@@ -1,7 +1,7 @@
 # Announcing Bamba
 
 <p align="center">
-  <img src="images/bamba.jpeg" alt="Bamba" width="400" height="400">
+  <img src="https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/bamba.jpeg" alt="Bamba" width="400" height="400">
 </p>
 
 Transformer models are increasingly being deployed in real-world applications, but they face GPU memory bandwidth bottleneck during inference. These bottlenecks arise during the per-token decoding step, during which a lot of data needs to move between the GPU memory (where the model weights and KV caches are located) and the compute units (where computations happen). Since the KV cache scales linearly with sequence length, for longer sequences, the data movement between memory and compute units is dominated by the KV cache. Initially, transformer models only supported smaller sequence lengths (2K, 4K, etc.), but as they support longer and longer sequence lengths (e.g., [Meta’s Llama 3.1](https://huggingface.co/meta-llama/Llama-3.1-8B) (128K tokens), [IBM’s Granite Code v3](https://huggingface.co/ibm-granite/granite-3b-code-base-128k) (128K tokens), and [Mistral Large](https://huggingface.co/mistralai/Mistral-Large-Instruct-2411) (32K tokens)—the memory bandwidth bottleneck becomes more pronounced.
@@ -108,7 +108,7 @@ The **KV-cache bottleneck** is the biggest challenge for large language models a
 Our current progression of integration into vLLM can be tracked via [this PR](https://github.com/vllm-project/vllm/pull/10909). We use this PR to benchmark the inference latencies against a typical transformer architecture; we pick Meta Llama 3.1 8B because of its popularity and the fact that it is highly optimized. We use an NVIDIA H100 80GB GPU for obtaining our measurements and use our measurement framework to obtain throughput in tokens/second. We pick input size as 1K tokens and generate varying outputs (from 2K to 64K) and at varying batch sizes. We plot for different sequence lengths (8k to 64k) both the throughput and latencies compared to Llama 3.1 8B. We observe that as batch size and sequence lengths increase, Bamba outperforms a similar sized transformer model by a margin of 2x in throughput and latency. From an inference standpoint, these architectures benefit both latency for real-time applications as well as utilization of the GPU. Note that ratios greater than 1 for throughput are beneficial and latencies less than 1 are beneficial.
 
 
-| ![Figure 1](images/bamba_llama_txput_ratios.png "Figure 1") | ![Figure 2](images/bamba_llama_latencies_ratios.png "Figure 2") |
+| ![Figure 1](https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/bamba_llama_txput_ratios.png "Figure 1") | ![Figure 2](https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/bamba_llama_latencies_ratios.png "Figure 2") |
 |:--:|:--:|
 | **Figure 1:** Throughput improvements of Bamba | **Figure 2:** Latency improvements of Bamba |
 
@@ -136,7 +136,7 @@ Open-source data has come a long way since the inception of Pile. When we starte
 We use Dolma v1.7 for the first phase of training and the data mixes chosen are illustrated below. For the second phase of training, we use [Fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu) and [Cosmopedia](https://huggingface.co/datasets/HuggingFaceTB/cosmopedia) datasets. These datasets are downloaded in their raw form and we tokenize them using the [Ray framework](https://github.com/ray-project/ray) running on an internal large scale [Red Hat Open Shift](https://www.redhat.com/en/technologies/cloud-computing/openshift) cluster. We plan to release the tokenized and formatted parquet data soon for reproducibility.
 
 <p align="center">
-<img src="images/datamix.png" alt="Datamix" width="600" height="400">
+<img src="https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/datamix.png" alt="Datamix" width="600" height="400">
 </p>
 <p align="center"><strong>Data mix for pretraining phase one</strong></p>
 
@@ -162,7 +162,7 @@ The data loader provides the following key features:
 We have battle tested this data loader over hundreds of training jobs and optimized it over months of continuous operation. While theoretical random shuffle would require global visibility, we empirically demonstrate that using a distributed stateless shuffle is sufficient (this lets us scale to arbitrary sizes without imposing any communications overhead at time of training). We use the [Linear Congruential Generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator) to generate random walks on the input data, which eliminates state maintenance while providing us the property of visiting a token exactly once during training time (in a single epoch). Data mixes are spread uniformly across the GPUs to ensure that each GPU "sees" an exact representation of the mix chosen at training launch. We compare an ideal random shuffle over 1.5K data points with that generated by the stateless shuffle using LCG in the below figure and observe that there are no significant differences.
 
 
-| ![Figure 1](images/ideal-shuffle.png "Figure 1") | ![Figure 2](images/stateless-shuffle.png "Figure 2") |
+| ![Figure 1](https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/ideal-shuffle.png "Figure 1") | ![Figure 2](https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/stateless-shuffle.png "Figure 2") |
 |:--:|:--:|
 | **Figure 1:** Ideal random shuffle. | **Figure 2:** Distributed stateless shuffle. |
 
@@ -179,7 +179,7 @@ We are currently exploring various approaches to long context length extensions 
 We use PhoneBook retrieval as the task to measure our performance. We extend the Bamba context length by 4x and 8x and compare the context-extended Bamba against three variations of Meta Llama - LLama2, Llama3, LLama3.1, with training context lengths of 4K, 8K, and 128K. The results are plotted below.
 
 <p align="center">
-<img src="images/phonebook.png" alt="Datamix" width="450" height="300">
+<img src="https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/phonebook.png" alt="Datamix" width="450" height="300">
 </p>
 
 We observe that the context-extended Bamba model performs exceptionally well up to a 16K context length without any tuning, outperforming the original Bamba 9B model, Llama2-7B, and llama3-8B by a large margin and obtaining comparable performance as Llama3.1-8B. At sequence length 32K, LLama3.1 achieves the best performing result. However, note that LLama3.1-8B was trained with 128K context length, which incurs a much higher pre-training cost than Bamba. As a next step, we plan to pursue various other approaches to context length extensions and study the performance on more tasks. These long context length extended models will be released as well.
@@ -246,5 +246,5 @@ At decode stage the compute and memory (read + write) requirements imposed by th
 
 A comparison of compute flops during prefill stage and memory (read+write) sizes during decode stage between Bamba and LLaMa models is shown below. Note that ratios lesser than 1 are beneficial. With inference throughput primarily bottlenecked by decode stage, the potential speedup for Bamba (over LLaMa) is 5x for large sequence lengths (> 16K). Current measurements (on vLLM) hover at 2.5x, which we expect to improve in the near future. 
 <p align="center">
-  <img src="images/ArithmeticIntensity.png" alt="ArithmeticIntensity" width="524" height="336">
+  <img src="https://raw.githubusercontent.com/foundation-model-stack/bamba/refs/heads/main/blog/images/ArithmeticIntensity.png" alt="ArithmeticIntensity" width="524" height="336">
 </p>

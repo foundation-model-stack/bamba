@@ -30,9 +30,9 @@ Several mamba/mamba2 architecture based models have started coming up in the las
 | Model           | Average| MMLU     | ARC-C      |   GSM8K   | Hellaswag| OpenbookQA|  Piqa      | TruthfulQA | Winogrande|
 |-----------------|-----------|-----------|------------|-----------|----------|-----------|------------|------------|-----------|
 | Bamba 9B (2.2T)  |  62.31    | 60.77 |	63.23	|  36.77|	 81.8     |	47.6 |	82.26     |	49.21  |	76.87    |
-|NVIDIA Mamba2 Hybrid 8B*| 53.6| 47.7		 |   --         |77.69       |  	 42.8	  |79.65	   |38.72	     |71.27       |	58.78    |
-|Zamba 7B |               57.85	 |55.38 |	61.33	       |82.27        |	46.8	   |82.21	     |49.69	     |79.32      |	64.36    |
-Falcon Mamba 7B   | 63.19	       |63.4	|  52.08	     |80.82        |	47.8    |	83.62	     | 53.46	    |78.14	    |65.31 |
+|NVIDIA Mamba2 Hybrid 8B*|	58.78 | 53.6| 47.7		 |  77.69 |--             |  	 42.8	  |79.65	   |38.72	     |71.27       |
+|Zamba 7B |   64.36    |            57.85	 |55.38 |	61.33	       |82.27        |	46.8	   |82.21	     |49.69	     |79.32      |	
+Falcon Mamba 7B   | 65.31 | 63.19	       |63.4	|  52.08	     |80.82        |	47.8    |	83.62	     | 53.46	    |78.14	    |
 
 
 \* Results are taken from [NVIDIA paper](https://arxiv.org/pdf/2406.07887).

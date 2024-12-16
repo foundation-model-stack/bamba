@@ -57,9 +57,9 @@ In particular, the dataloader is:
 
 The code for the data loader in Bamba is available [here](https://github.com/foundation-model-stack/fms-fsdp/blob/mamba-new/fms_fsdp/utils/dataset_utils.py), with a constructor function available [here](https://github.com/foundation-model-stack/fms-fsdp/blob/mamba-new/fms_fsdp/utils/dataloader_utils.py#L60)
 The constructor returns a generic PyTorch DataLoader, making it easy to incorporate into other training runs.
-A graphical overview of Bamba's dataloader structure is below:
+A graphical example of Bamba's dataloader structure is below:
 <p align="center">
-<img src="loader_example.jpg", width="600"/>
+<img src="databranch.jpg", width="600"/>
 </p>
 
 We are currently working on contributing our dataloader back into PyTorch. 

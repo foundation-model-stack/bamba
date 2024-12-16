@@ -56,6 +56,7 @@ We compare Bamba and Falcon Mamba with SoTA transformer models (Meta Llama 3.1 8
 | IBM Granite v3 8B | 67.47 | 65.45 | 63.74 | 62.55 | 83.29 | 47.6 | 83.41 | 52.89 | 80.82 |
 | Olmo2 7B | 66.17 | 63.96 | 64.51 | 68.01 | 81.93 | 49.2 | 81.39 | 43.32 | 77.03 |
 | Gemma2 9B | 68.38 | 72.29 | 68.26 | 67.4 | 82.56 | 47.8 | 83.24 | 45.39 | 80.11 |
+| Qwen2.5 7B | 70.58 | 75.41 | 63.82 | 83.24 | 80.23 | 48.40 | 81.28 | 56.34 | 75.93 |
 
 </details>
 
@@ -69,6 +70,7 @@ We compare Bamba and Falcon Mamba with SoTA transformer models (Meta Llama 3.1 8
 | IBM Granite v3 8B | 21.14 | 25.83 | 28.02 | 9.06 | 44.79 | 9.82 | 9.32 |
 | Olmo2 7B | 13.36 | 22.79 | 21.69 | 4.92 | 16.35 | 4.38 | 10.02 |
 | Gemma2 9B | 21.79 | 34.84 | 34.81 | 11.07 | 21.28 | 13.44 | 15.3 |
+| Qwen2.5 7B | 20.6 | 37.62 | 35.62 | 9.96 | 34.77 | 18.35 | 14.6 |
 
 ### Safety tasks
 

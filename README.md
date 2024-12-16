@@ -31,8 +31,6 @@ cd flash-attention && pip install . && cd ..
 
 ## Models
 
-### Overview
-
 | Model            | Params       | # Layers | Hidden Dim. | Attention Heads | GQA | KV Heads | Context Length |  Tied Embeddings |
 |-------------------|--------------|----------|-------------|-----------------|-----|----------|----------------|------------------|
 | Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | True |
@@ -64,6 +62,130 @@ Note that this training effort was started before FSDP2 and also long before we 
 `Mamba2-Hybrid` to HF, so we were doing FSDP1 training with [official Mamba implementation](https://github.com/state-spaces/mamba).
 For users trying to reproduce the training you now have much more options with our newly
 contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
+
+
+## Benchmark scores
+
+### Base pretrained models
+
+<table>
+  <tr>
+   <td><strong>Category</strong>
+   </td>
+   <td><strong>Benchmark</strong>
+   </td>
+   <td><strong>Bamba 9B (2.2T)</strong>
+   </td>
+  </tr>
+  <tr>
+   <td rowspan="8" >General
+   </td>
+   <td>MMLU
+   </td>
+   <td>60.77
+   </td>
+  </tr>
+  <tr>
+   <td>ARC-C
+   </td>
+   <td>63.23
+   </td>
+  </tr>
+  <tr>
+   <td>GSM8K
+   </td>
+   <td>36.77
+   </td>
+  </tr>
+  <tr>
+   <td>Hellaswag
+   </td>
+   <td>81.8
+   </td>
+  </tr>
+  <tr>
+   <td>OpenbookQA
+   </td>
+   <td>47.6
+   </td>
+  </tr>
+  <tr>
+   <td>Piqa
+   </td>
+   <td>82.26
+   </td>
+  </tr>
+  <tr>
+   <td>TruthfulQA
+   </td>
+   <td>49.21
+   </td>
+  </tr>
+  <tr>
+   <td>Winogrande
+   </td>
+   <td>76.87
+   </td>
+  </tr>
+  <tr>
+   <td rowspan="6" >HF LLM- V2
+   </td>
+   <td>MMLU-PRO	
+   </td>
+   <td>17.53
+   </td>
+  </tr>
+  <tr>
+   <td>BBH
+   </td>
+   <td>17.4
+   </td>
+  </tr>
+  <tr>
+   <td>GPQA
+   </td>
+   <td>4.14
+   </td>
+  </tr>
+  <tr>
+   <td>IFEval
+   </td>
+   <td>15.16
+   </td>
+  </tr>
+  <tr>
+   <td>MATH Lvl 5	
+   </td>
+   <td>1.66
+   </td>
+  </tr>
+  <tr>
+   <td>MuSR
+   </td>
+   <td>9.59
+   </td>
+  </tr>
+  <tr>
+   <td rowspan="3" >Safety Tasks
+   </td>
+   <td>PopQA (5-shot, generation)	
+   </td>
+   <td>20.5
+   </td>
+  </tr>
+  <tr>
+   <td>Toxigen (5-shot, logits)	
+   </td>
+   <td>57.4
+   </td>
+  </tr>
+  <tr>
+   <td>BBQ (5-shot, generation)
+   </td>
+   <td>44.2
+   </td>
+  </tr>
+</table>
 
 
 ## Fine-tuning

@@ -155,7 +155,7 @@ config.file_type = "hf_parquet"
 config.col_name = "text"
 config.tokenizer_path = "path/to/hf/tokenizer"
 ```
-Note that `tokenizer_path` must point to a HuggingFace tokenizer, and `col_name` may vary from dataset to dataset. `"text"` is common but not universal.
+Note that `tokenizer_path` must point to a HuggingFace tokenizer, and `col_name` may vary from dataset to dataset. `"text"` is common but not universal. `"auto"` will also work for `file_type`.
 
 ### 3) Add support for your own file type
 The FileHandler class stub (TODO: link once mamba_new is PRed) allows support for arbitrary file types. Simply implement 5 basic functions:

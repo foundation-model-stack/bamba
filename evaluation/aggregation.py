@@ -141,18 +141,15 @@ def parse_args():
 
     parser.add_argument(
         "--output_dir_path",
-        default="debug",
+        default="",
         help="Output directory path",
     )
 
     parser.add_argument(
         "--res_dirs",
         nargs="+",
-        default=[
-            "Bamba_eval",
-            "Bamba_eval_last_models",
-        ],
-        help="Task name (default: leaderboard)",
+        default=[],
+        help="results_dirs",
     )
 
     return parser.parse_args()

@@ -147,7 +147,7 @@ print(subdata_tokens)
 
 # [1456.0, 1834.99, 1557.99, 1850.99, 450.02, 1499.99, 299.99, 235.99, 114.01, 199.99, 99.99, 61.99, 26.99, 10.99, 50.99, 49.0, 100.06, 55.0, 45.0]
 ```
-These weights do indeed match the weights in our config - to within one thousandth of a percent!
+These weights do indeed match the weights in our config - to within two thousandths of a percent!
 
 Note that this state dict is not flat - some of these fields contain further state dicts. In particular, `Sampling_Dataset.sample_iterator_states` contains the state dicts for each of the subdataset iterators on this shard. Following the diagram above, each of these iterators in turn contains subiterators for each logical partition of the dataset:
 ```python

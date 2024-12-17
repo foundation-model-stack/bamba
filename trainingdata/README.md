@@ -129,7 +129,7 @@ One perk of our distributed dataloader checkpoints is that they're human-readabl
 ```
 aws --endpoint-url=https://s3.us-east.cloud-object-storage.appdomain.cloud/ s3 cp s3://bamba-public/checkpoints/pretraining/phase_one/1_8t/step_1140000_ckp/loader_state_0.pth ./temp_ckpt.pth
 ```
-Then in python:
+Then in python, load the state dictionary:
 ```python
 import torch
 

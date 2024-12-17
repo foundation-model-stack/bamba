@@ -163,3 +163,4 @@ cython_debug/
 
 .vscode/
 evaluation/evaluation_results/
+evaluation/scripts

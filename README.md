@@ -36,7 +36,7 @@ cd flash-attention && pip install . && cd ..
 | Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | False |
 
 ### Checkpoints
-We have published our model checkpoints here: TODO: add mamba HF page once public
+We have published our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)
 
 
 ## Inference

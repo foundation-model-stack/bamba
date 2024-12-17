@@ -20,6 +20,14 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run leaderboard evaluation.")
 
     # Constants (now configurable via command-line arguments)
+
+    parser.add_argument(
+        "--run_env",
+        default="LSF",
+        choices=["LSF", "local"],
+        help="Path to the directory where evaluation results and logs will be saved. (default: 'LSF')",
+    )
+
     parser.add_argument(
         "--benchmarks",
         nargs="+",
@@ -105,6 +113,12 @@ def parse_args():
         help="If set, runs only one subtask per model for quick debugging. (default: False)",
     )
 
+    parser.add_argument(
+        "--dry_run",
+        action="store_true",
+        help="If set, runs will not be sent",
+    )
+
     args = parser.parse_args()
 
     return args
@@ -169,28 +183,41 @@ def run_job(model_id, task_to_run, args):
             model_args += "dtype=float16"
         elif args.fp_precision in [8, 4]:
             model_args += f"load_in_{args.fp_precision}_bit=True"
-        raise NotImplementedError(
-            f"current precision {args.fp_precision} is not supported, only [4,8,16]"
-        )
-    elif model_engine == "vllm":
-        if args.fp_precision == 8:
-            model_args += "quantization=fp8"
+        else:
+            raise NotImplementedError(
+                f"current precision {args.fp_precision} is not supported, only [4,8,16]"
+            )
+    # elif model_engine == "vllm":
+    #     if args.fp_precision == 8:
+    #         model_args += "quantization=compressed-tensors"
+
+    env_command = (
+        [
+            "jbsub",
+            "-name",
+            task_to_run["task"] + "_" + model_id,
+            "-mem",
+            args.memory,
+            "-cores",
+            args.cores,
+            "-require",
+            args.req_gpu,
+            "-q",
+            args.queue,
+            f"LD_LIBRARY_PATH={args.python_executable}/site-packages/nvidia/nvjitlink/lib:$LD_LIBRARY_PATH",
+            ";",
+            f"HF_HOME={cache_dir}",
+            ";",
+        ]
+        if args.run_env == "LSF"
+        else []
+    )
 
     command = [
-        "jbsub",
-        "-name",
-        task_to_run["task"] + "_" + model_id,
-        "-mem",
-        args.memory,
-        "-cores",
-        args.cores,
-        "-require",
-        args.req_gpu,
-        "-q",
-        args.queue,
-        "cd /dccstor/eval-research/code/lm-evaluation-harness",
-        "&&",
-        f"HF_HOME={cache_dir}",
+        *env_command,
+        "cd",
+        args.path_to_lmeval,
+        ";",
         args.python_executable,
         os.path.join(args.path_to_lmeval, "lm_eval"),
         "--model",
@@ -219,7 +246,9 @@ def run_job(model_id, task_to_run, args):
             f"--num_fewshot={task_to_run['num_fewshot']}",
         )
 
-    job_id = get_job_id(model_id, output_path, [str(item) for item in command])
+    job_id = get_job_id(
+        model_id, output_path, [str(item) for item in command], args.dry_run
+    )
 
     return job_id
 

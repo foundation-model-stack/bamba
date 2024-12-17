@@ -95,24 +95,33 @@ def setup_logging(output_dir):
         )
 
 
-def get_job_id(model_id, output_path, command):
-    try:
-        result = subprocess.run(command, check=True, capture_output=True, text=True)
-        logging.info(f"Submitted job for {model_id}. Output will be in {output_path}")
-
-        match = re.search(r"Job <(\d+)>", result.stdout)
-        if match:
-            job_id = match.group(1)
-            logging.info(f"Job ID: {job_id}")
-        else:
-            logging.warning(f"Could not parse job ID from output: {result.stdout}")
-            job_id = None
-
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error submitting job for {model_id}:")
-        logging.error(f"Return code: {e.returncode}")
-        logging.error(f"Stdout: {e.stdout}")
-        logging.error(f"Stderr: {e.stderr}")
+def get_job_id(model_id, output_path, command, dry_run=False):
+    if dry_run:
+        # logging.info(
+        print(
+            # f"dry_run enabled Command to run" 
+            f"\n{' '.join(command)}")
         job_id = None
+    else:
+        try:
+            result = subprocess.run(command, check=True, capture_output=True, text=True)
+            logging.info(
+                f"Submitted job for {model_id}. Output will be in {output_path}"
+            )
+
+            match = re.search(r"Job <(\d+)>", result.stdout)
+            if match:
+                job_id = match.group(1)
+                logging.info(f"Job ID: {job_id}")
+            else:
+                logging.warning(f"Could not parse job ID from output: {result.stdout}")
+                job_id = None
+
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Error submitting job for {model_id}:")
+            logging.error(f"Return code: {e.returncode}")
+            logging.error(f"Stdout: {e.stdout}")
+            logging.error(f"Stderr: {e.stderr}")
+            job_id = None
 
     return job_id

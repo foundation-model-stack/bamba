@@ -33,7 +33,7 @@ cd flash-attention && pip install . && cd ..
 
 | Model            | Params       | # Layers | Hidden Dim. | Attention Heads | GQA | KV Heads | Context Length |  Tied Embeddings |
 |-------------------|--------------|----------|-------------|-----------------|-----|----------|----------------|------------------|
-| Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | True |
+| Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | False |
 
 ### Checkpoints
 We have published our model checkpoints here: TODO: add mamba HF page once public

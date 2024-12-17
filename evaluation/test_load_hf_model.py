@@ -1,7 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+model_name = "Qwen/Qwen2.5-7B"
 
-model_name = "ibm-fms/Bamba-9B-fp8"
-
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name, load_in_8bit=True)
+tokenizer = AutoTokenizer.from_pretrained(model_name, force_download=True)
+model = AutoModelForCausalLM.from_pretrained(model_name, force_download=True)

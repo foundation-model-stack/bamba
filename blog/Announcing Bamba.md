@@ -31,10 +31,11 @@ To foster community experimentation, we are also releasing a distributed statele
 We divide our evaluations into three parts: first, we compare with SoTA transformer models of similar size, second, we compare with transformer models with similar token budget, and finally, we compare with other Mamba variants.
 
 ### Evaluation setup
-We rerun all the benchmarks following the setup and scripts [here](https://github.com/foundation-model-stack/bamba/blob/main/evaluation/README.md) for all models except the NVIDIA Mamba2 Hybrid model. We could not run benchmarking for NVIDIA Mamba2 Hybrid model as the model weights are not in Hugging Face transformers compatible format. Therefore, we report the numbers from the original paper. For tasks used in the [Huggingface v2 leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/), we perform the recommended [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized results.
+We run all our benchmarks using setup and scripts [here](https://github.com/foundation-model-stack/bamba/blob/main/evaluation/README.md) with the [LLM Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness) and [Unitxt](https://github.com/IBM/unitxt/tree/main).
+For tasks used in the [Huggingface v2 leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/), we perform the recommended [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized scores.
 
 ### TL;DR
-Bamba-9B demonstrates the competitive performance of hybrid Mamba models compared to transformer models. While it has gaps in math benchmarks and MMLU scores, excluding these benchmarks places its average performance nearly on par with Meta Llama 3.1 8B (48.01 vs. 48.22). These gaps can be addressed by (a) extending pretraining with more tokens (MMLU scores steadily improved during training), and (b) incorporating high-quality math data in the pretraining/annealing phases. Future plans include using updated datasets like Olmo2 mix and annealing with benchmark-aligned mixes such as Dolmino mix.
+Bamba-9B, a novel hybrid Mamba model, delivers quality comparable to established transformer models. While it has gaps in math benchmarks and MMLU scores, excluding these benchmarks places its average performance nearly on par with Meta Llama 3.1 8B (48.01 vs. 48.22). These gaps can be addressed by (a) extending pretraining with more tokens (MMLU scores steadily improved during training), and (b) incorporating high-quality math data in the pretraining/annealing phases. Future plans include using updated datasets like Olmo2 mix and annealing with benchmark-aligned mixes such as Dolmino mix.
 
 Bamba-9B’s results also alleviate concerns raised by the relatively low scores of NVIDIA’s Mamba2 Hybrid model in leaderboard benchmarks. Notably, NVIDIA’s study used an older data mix to compare architectures under identical conditions. Consistent with those findings, Bamba-9B reaffirms that the Mamba2 hybrid architecture offers competitive performance along with up to 5x inference efficiency.
 
@@ -42,9 +43,8 @@ Bamba-9B’s results also alleviate concerns raised by the relatively low scores
 
 We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (Meta Llama 3.1 8B, IBM Granite v3 8B, Olmo2 7B, and Gemma2 9B). We observe that while there are obvious benchmark gaps, it is not clear that these gaps point to deficiencies in the mamba/mamba2 based models. In fact, a careful analysis shows that gaps are largly due to amount of data used for training models and inclusion of benchmark-aligned instruction datasets during the annealing phase. For example, we had one small scale run that added `metamath` and improved our `GSM8k` score from `36.77` to `60.0`. We will publish detailed analysis and our findings in an upcoming paper.
 
-
 <details>
-<summary>HF OpenLLM v1 leaderboard</summary>
+<summary>HF OpenLLM v1 leaderboard ++</summary>
 
 [HF LLM- V1](https://huggingface.co/docs/leaderboards/en/open_llm_leaderboard/archive) \+ OpenbookQA and PIQA :
 
@@ -60,7 +60,7 @@ We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (
 
 </details>
 
-[HF LLM- V2](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/about)\*\* :
+[HF LLM- V2](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/about) :
 
 | Model | Average | MMLU-PRO | BBH | GPQA | IFEval | MATH Lvl 5 | MuSR |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -74,9 +74,9 @@ We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (
 
 ### Safety tasks
 
-Safety benchmarks are crucial for ensuring AI models generate content that is ethical, inclusive, and non-harmful. We evaluate our model on  well known safety benchmarks such as, Toxingen (focused on detecting toxic language), BBQ, and Ethos (which measures bias and fairness). These benchmarks help us identify and mitigate harmful outputs, ensuring the model avoids generating offensive or discriminatory content. We intend to fix the gaps in safety through comprehensive SFT and DPO approaches.
+Safety benchmarks are crucial for ensuring AI models generate content that is ethical, inclusive, and non-harmful. We evaluate our model on well known safety benchmarks such as, Toxigen (5-shot, logits) (focused on detecting toxic language), BBQ (5-shot, generation), PopQA (5-shot, generation), and Ethos (which measures bias and fairness). These benchmarks help us identify and mitigate harmful outputs, ensuring the model avoids generating offensive or discriminatory content. We intend to fix the gaps in safety through comprehensive SFT and DPO approaches.
 
-| Model | PopQA (5-shot, generation) | Toxigen (5-shot, logits) | BBQ (5-shot, generation) |
+| Model | PopQA | Toxigen | BBQ  |
 | :---- | :---- | :---- | :---- |
 | [Bamba 9B](https://huggingface.co/ibm-fms/Bamba-9B) | 20.5 | 57.4 | 44.2 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 25.7 | 63.1 | 58.4 |
@@ -87,12 +87,12 @@ Safety benchmarks are crucial for ensuring AI models generate content that is et
 
 ## Comparison with transformers with similar token budget
 
-We pick a few promiment models: [Olmo 7B trained on identical data (2024)](https://huggingface.co/allenai/OLMo-7B-0424-hf), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2 hybrid architecture is competitive with the tranformer models trained on the same dataset with similar token budget.
+We pick a few promiment models: Olmo 7B trained on identical data (2024), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2 hybrid architecture is competitive with the tranformer models trained on the same dataset with similar token budget.
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
-| Olmo1.5 7B | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| [Olmo1.5 7B](https://huggingface.co/allenai/OLMo-7B-0424-hf) | TBD | 50.51 | TBD | TBD | TBD | 45.2 | 81.56 | 35.92 | 73.09 |
 | [Bamba 9B (2T)](https://huggingface.co/ibm-fms/Bamba-9B-2T) | 59.11 | 59.05 | 57.25 | 24.03 | 83.66 | 47.6 | 83.62 | 38.26 | 79.4 |
 | [Meta Llama2 7B](https://huggingface.co/meta-llama/Llama-2-7b-hf) | 53.78 | 46.64 | 52.65 | 13.57 | 78.95 | 45.2 | 80.03 | 38.96 | 74.27 |
 | [IBM Granite 7B](https://huggingface.co/ibm-granite/granite-7b-base) | 52.07 | 49.02 | 49.91 | 10.84 | 77.0 | 40.8 | 80.14 | 38.7 | 70.17 |
@@ -111,7 +111,7 @@ Several mamba/mamba2 architecture based models have started coming up in the las
 | [Zamba 7B](https://huggingface.co/Zyphra/Zamba-7B-v1) | 64.36 | 57.85 | 55.38 | 61.33 | 82.27 | 46.8 | 82.21 | 49.69 | 79.32 |
 | [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | 65.31 | 63.19 | 63.4 | 52.08 | 80.82 | 47.8 | 83.62 | 53.46 | 78.14 |
 
-\* Results are taken from [NVIDIA paper](https://arxiv.org/pdf/2406.07887).
+\* Results are taken from [NVIDIA paper](https://arxiv.org/pdf/2406.07887) as Hugging Face transformers compatible format was not supplied by the authors.
 
 The differences in training datasets and the number of tokens seen during traing make a direct comparison of these models difficult. The key takeaway from this table is that mamba2 hybrid architecture can deliver competitive results while being nearly as efficient to train as transformer models. Furthermore, they can deliver significant improvement (theoretically up to 5x) in inference efficiency despite having full attention layers interspersed with mamba2 layers. We are continuing to pretrain the Bamba model with latest datasets and plan to release future checkpoints as the model gets better.
 

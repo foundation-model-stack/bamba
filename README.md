@@ -42,18 +42,8 @@ We have published our model checkpoints here: TODO: add mamba HF page once publi
 ## Inference
 You can utilize our newly contributed HF integration to run inference on our Bamba models:
 ```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model = AutoModelForCausalLM.from_pretrained("ibm-fms/Bamba-9B")
-tokenizer = AutoTokenizer.from_pretrained("ibm-fms/Bamba-9B")
-
-message = ["I am an LLM and my name is "]
-inputs = tokenizer(message, return_tensors='pt', return_token_type_ids=False)
-response = model.generate(**inputs, max_new_tokens=100, do_sample=True, top_k=50, top_p=0.95)
-print(tokenizer.batch_decode(response, skip_special_tokens=True)[0])
-
+python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms/Bamba-9B --prompt "The largest living mammal on Earth is " --max_new_tokens 128
 ```
-
 
 ## Training
 

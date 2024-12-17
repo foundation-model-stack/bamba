@@ -41,7 +41,7 @@ Bamba-9B’s results also alleviate concerns raised by the relatively low scores
 
 ### Comparison with SoTA transformer models
 
-We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (Meta Llama 3.1 8B, IBM Granite v3 8B, Olmo2 7B, and Gemma2 9B). We observe that while there are obvious benchmark gaps, it is not clear that these gaps point to deficiencies in the mamba/mamba2 based models. In fact, a careful analysis shows that gaps are largly due to amount of data used for training models and inclusion of benchmark-aligned instruction datasets during the annealing phase. For example, we had one small scale run that added `metamath` and improved our `GSM8k` score from `36.77` to `60.0`. We will publish detailed analysis and our findings in an upcoming paper.
+We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (Meta Llama 3.1 8B, IBM Granite v3 8B, Olmo2 7B, and Gemma2 9B). We observe that while there are obvious benchmark gaps, it is not clear that these gaps point to deficiencies in the mamba/mamba2 based models. In fact, a careful analysis shows that gaps are largely due to the amount of data used for training models and the inclusion of benchmark-aligned instruction datasets during the annealing phase. For example, we had one small scale run that added `metamath` and improved our `GSM8k` score from `36.77` to `60.0`. We will publish detailed analysis and our findings in an upcoming paper.
 
 <details>
 <summary>HF OpenLLM v1 leaderboard ++</summary>
@@ -74,7 +74,7 @@ We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (
 
 ### Safety tasks
 
-Safety benchmarks are crucial for ensuring AI models generate content that is ethical, inclusive, and non-harmful. We evaluate our model on well known safety benchmarks such as, Toxigen (5-shot, logits) (focused on detecting toxic language), BBQ (5-shot, generation), PopQA (5-shot, generation), and Ethos (which measures bias and fairness). These benchmarks help us identify and mitigate harmful outputs, ensuring the model avoids generating offensive or discriminatory content. We intend to fix the gaps in safety through comprehensive SFT and DPO approaches.
+Safety benchmarks are crucial for ensuring AI models generate content that is ethical, inclusive, and non-harmful. We evaluate our model on well known safety benchmarks such as Toxigen (5-shot, logits) (focused on detecting toxic language), BBQ (5-shot, generation), PopQA (5-shot, generation), and Ethos (which measures bias and fairness). These benchmarks help us identify and mitigate harmful outputs, ensuring the model avoids generating offensive or discriminatory content. We intend to fix the gaps in safety through comprehensive SFT and DPO approaches.
 
 | Model | PopQA | Toxigen | BBQ  |
 | :---- | :---- | :---- | :---- |
@@ -87,7 +87,7 @@ Safety benchmarks are crucial for ensuring AI models generate content that is et
 
 ## Comparison with transformers with similar token budget
 
-We pick a few promiment models: Olmo 7B trained on identical data (2024), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2 hybrid architecture is competitive with the tranformer models trained on the same dataset with similar token budget.
+We pick a few prominent models: Olmo 7B trained on identical data (2024), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2-based hybrid models are competitive with the transformer models trained on the same dataset with similar token budget.
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -102,7 +102,7 @@ We pick a few promiment models: Olmo 7B trained on identical data (2024), Meta L
 
 ### Comparison with mamba/mamba2 architecture based language models
 
-Several mamba/mamba2 architecture based models have started coming up in the last 6 months (e.g., NVIDIA Mamba2 Hybrid, Codestral Mamba, Falcon Mamba, Zamba7Bv1) furthering the performance of these architectures and demonstrating their superior inference performance as well as closing the gap with quality. We compare 8 key benchmarks across Bamba, NVIDIA Mamba2 Hybrid, Zamba, and Falcon Mamba. Falcon Mamba is a pure mamba model, Zamba has shared attention layer for every 6 mamba layers, and Bamba and NVIDIA are both hybrid models with full attention layers interspersed with mamba2 layer. Falcon Mamba was trained to 5.5T tokens and it performs the best overall but there are open questions on how well it will perform on long-context tasks where mamba-based architectures truly shine in their inference performance. Zamba was trained on fewer tokens (1T), but with a different Hybrid architecture and datasets that had benchmark-aligned instruction datasets including those generated from more powerful langauge models. Bamba and NVIDIA Mamba2 Hybrid are quite similar to each other (details on differences are summarized in the model architecture section), but Bamba is trained to 2.2T tokens while NVIDIA Hybrid Mamba is trained to 3.5T tokens.
+Several mamba/mamba2 architecture based models have started coming up in the last 6 months (e.g., NVIDIA Mamba2 Hybrid, Codestral Mamba, Falcon Mamba, Zamba7Bv1) furthering the performance of these architectures and demonstrating their superior inference performance as well as closing the gap with quality. We compare 8 key benchmarks across Bamba, NVIDIA Mamba2 Hybrid, Zamba, and Falcon Mamba. Falcon Mamba is a pure mamba model, Zamba has shared attention layer for every 6 mamba layers, and Bamba and NVIDIA are both hybrid models with full attention layers interspersed with mamba2 layer. Falcon Mamba was trained to 5.5T tokens and it performs the best overall but there are open questions on how well it will perform on long-context tasks where mamba-based architectures truly shine in their inference performance. Zamba was trained on fewer tokens (1T), but with a different Hybrid architecture and datasets that had benchmark-aligned instruction datasets including those generated from more powerful language models. Bamba and NVIDIA Mamba2 Hybrid are quite similar to each other (details on differences are summarized in the model architecture section), but Bamba is trained to 2.2T tokens while NVIDIA Hybrid Mamba is trained to 3.5T tokens.
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -113,7 +113,7 @@ Several mamba/mamba2 architecture based models have started coming up in the las
 
 \* Results are taken from [NVIDIA paper](https://arxiv.org/pdf/2406.07887) as Hugging Face transformers compatible format was not supplied by the authors.
 
-The differences in training datasets and the number of tokens seen during traing make a direct comparison of these models difficult. The key takeaway from this table is that mamba2 hybrid architecture can deliver competitive results while being nearly as efficient to train as transformer models. Furthermore, they can deliver significant improvement (theoretically up to 5x) in inference efficiency despite having full attention layers interspersed with mamba2 layers. We are continuing to pretrain the Bamba model with latest datasets and plan to release future checkpoints as the model gets better.
+The differences in training datasets and the number of tokens seen during training make a direct comparison of these models difficult. The key takeaway from this table is that mamba2 hybrid architecture can deliver competitive results while being nearly as efficient to train as transformer models. Furthermore, they can deliver significant improvement (theoretically up to 5x) in inference efficiency despite having full attention layers interspersed with mamba2 layers. We are continuing to pretrain the Bamba model with latest datasets and plan to release future checkpoints as the model gets better.
 
 </details>
 
@@ -185,9 +185,11 @@ We have battle tested this data loader over hundreds of training jobs and optimi
 
 ## Quantization
 
-We recently open sourced a [framework](https://github.com/foundation-model-stack/fms-model-optimizer/) for quantization of models. Through this framework, we leverage the [llm-compressor](https://github.com/vllm-project/llm-compressor) to quantize the Bamba checkpoints to `fp8`. We observed minimal loss in accuracy across all the benchmarks of the OpenLLM leaderboard. These quantized checkpoints are also released along with the `bf16` counterparts. This also validates that Bamba models are amenable to quantization much like SoTA transformer models.
+We recently open sourced a [framework](https://github.com/foundation-model-stack/fms-model-optimizer/) for quantization of models. Through this framework, we leverage the [llm-compressor](https://github.com/vllm-project/llm-compressor) to quantize the Bamba checkpoints to `fp8`. We observed minimal loss in accuracy across all the benchmarks of the OpenLLM leaderboards. Specifically, for the Bamba 9B, a negligible difference of `0.1` between the average scores for V1 (from `62.31` to `61.5`), and for V2 drop of `0.9` in the average (`10.91` to `10.04`). These quantized checkpoints are also released along with the `bf16` counterparts. This also validates that Bamba models are amenable to quantization much like SoTA transformer models.
 
 We are in the process of enabling `fp8` inference for this model in vLLM, which will require updating the kernels. Linear layers and full attention will be easy to tackle, but the Mamba layers will require updates to the Triton/CUDA kernels to handle `fp8`. Our initial analysis indicates that there is one specific layer, which is performing `matmul`, which should make this upgrade smooth.
+
+
 
 ## Context length extension
 

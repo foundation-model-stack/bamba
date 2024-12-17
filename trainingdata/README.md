@@ -55,7 +55,7 @@ The code for the data loader in Bamba is available [here](https://github.com/fou
 The constructor returns a generic PyTorch DataLoader, making it easy to incorporate into other training runs.
 A graphical example of Bamba's dataloader structure is below:
 <p align="center">
-<img src="databranch.jpg", width="600"/>
+<img src="databranch.jpg", width="800"/>
 </p>
 
 We are currently working on contributing our dataloader back into PyTorch. 

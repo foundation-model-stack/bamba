@@ -138,7 +138,7 @@ print(list(state_d.keys()))
 
 # ['Sampling_Dataset.sample_iterator_states', 'Sampling_Dataset.tokens_seen', 'Sampling_Dataset.current_iterator', 'Buffer_Dataset.buffer', 'Preload_Buffer_Dataset.g_state', 'Preload_Buffer_Dataset.buffer']
 ```
-Each of these fields contains statistics from the relevant layer of the pipeline shown earlier. We can check that behavior is tracking as expected - for example, `Sampling_Dataset.tokens_seen` tracks the number of tokens consumed from each subdataset. Let's check those proportions against the weights we provided above:
+Each of these fields contains statistics from the relevant layer of the pipeline diagram shown above. We can check that behavior is tracking as expected - for example, `Sampling_Dataset.tokens_seen` tracks the number of tokens consumed from each subdataset. Let's check those proportions against the weights we asked for in our config:
 ```python
 subdata_tokens = state_d['Sampling_Dataset.tokens_seen']
 subdata_tokens = [x/sum(subdata_tokens) for x in subdata_tokens]
@@ -147,7 +147,7 @@ print(subdata_tokens)
 
 # [1456.0, 1834.99, 1557.99, 1850.99, 450.02, 1499.99, 299.99, 235.99, 114.01, 199.99, 99.99, 61.99, 26.99, 10.99, 50.99, 49.0, 100.06, 55.0, 45.0]
 ```
-These weights do indeed match the weights we asked for in our config - to within one thousandth of a percent!
+These weights do indeed match the weights in our config - to within one thousandth of a percent!
 
 Note that this state dict is not flat - some of these fields contain further state dicts. In particular, `Sampling_Dataset.sample_iterator_states` contains the state dicts for each of the subdataset iterators on this shard. Following the diagram above, each of these iterators in turn contains subiterators for each logical partition of the dataset:
 ```python

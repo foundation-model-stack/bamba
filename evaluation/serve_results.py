@@ -29,6 +29,14 @@ if __name__ == "__main__":
 
     st.title("🚀🚀🚀 Evals for Bamba model release 🚀🚀🚀")
 
+    with st.form("model selector"):
+        selected_models = st.multiselect(
+            "Choose models", options=df.model.unique(), default=df.model.unique()
+        )
+        submitted = st.form_submit_button("Show model subset")
+        if submitted:
+            df = df.query("model in @selected_models")
+
     styled_df = df.style.background_gradient(cmap="Greens").format(format_dict)
     column_order = [col for col in df.columns if col not in ["model", "MWR"]]
     column_order.insert(0, "MWR")
@@ -37,7 +45,7 @@ if __name__ == "__main__":
         styled_df,
         use_container_width=True,
         hide_index=True,
-        height=550,
+        height=850,
         column_order=column_order,
     )
 

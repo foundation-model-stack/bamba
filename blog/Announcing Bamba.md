@@ -28,10 +28,10 @@ To foster community experimentation, we are also releasing a distributed statele
 
 ## Evaluations
 
-We divide our evaluations into three parts: first, we compare with SoTA transformer models, second we compare with transformer models with similar token budget, and finally, we compare with other Mamba variants.
+We divide our evaluations into three parts: first, we compare with SoTA transformer models of similar size, second, we compare with transformer models with similar token budget, and finally, we compare with other Mamba variants.
 
 ### Evaluation setup
-We rerun all the benchmarks following the setup and scripts [here](https://github.com/foundation-model-stack/bamba/blob/main/evaluation/README.md) for all models except the NVIDIA Mamba2 Hybrid model. We could not run benchmarking for NVIDIA Mamba2 Hybrid model as the model weights are not in Hugging Face transformers compatible format. Therefore, we report the numbers from the original paper. For the v2 leaderboard results, we perform [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized results.
+We rerun all the benchmarks following the setup and scripts [here](https://github.com/foundation-model-stack/bamba/blob/main/evaluation/README.md) for all models except the NVIDIA Mamba2 Hybrid model. We could not run benchmarking for NVIDIA Mamba2 Hybrid model as the model weights are not in Hugging Face transformers compatible format. Therefore, we report the numbers from the original paper. For tasks used in the [Huggingface v2 leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/), we perform the recommended [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized results.
 
 ### TL;DR
 Bamba-9B demonstrates the competitive performance of hybrid Mamba models compared to transformer models. While it has gaps in math benchmarks and MMLU scores, excluding these benchmarks places its average performance nearly on par with Meta Llama 3.1 8B (48.01 vs. 48.22). These gaps can be addressed by (a) extending pretraining with more tokens (MMLU scores steadily improved during training), and (b) incorporating high-quality math data in the pretraining/annealing phases. Future plans include using updated datasets like Olmo2 mix and annealing with benchmark-aligned mixes such as Dolmino mix.
@@ -40,7 +40,7 @@ Bamba-9B’s results also alleviate concerns raised by the relatively low scores
 
 ### Comparison with SoTA transformer models
 
-We compare Bamba and Falcon Mamba with SoTA transformer models (Meta Llama 3.1 8B, IBM Granite v3 8B, Olmo2 7B, and Gemma2 9B). We observe that while there are obvious benchmark gaps, it is not clear that these gaps point to deficiencies in the mamba/mamba2 based models. In fact, a careful analysis shows that gaps are largly due to amount of data used for training models and inclusion of benchmark-aligned instruction datasets during the annealing phase. For example, we had one small scale run that added `metamath` and improved our `GSM8k` score from `36.77` to `60.0`. We will publish detailed analysis and our findings in an upcoming paper.
+We compare Bamba and Falcon Mamba with SoTA transformer models of similar size (Meta Llama 3.1 8B, IBM Granite v3 8B, Olmo2 7B, and Gemma2 9B). We observe that while there are obvious benchmark gaps, it is not clear that these gaps point to deficiencies in the mamba/mamba2 based models. In fact, a careful analysis shows that gaps are largly due to amount of data used for training models and inclusion of benchmark-aligned instruction datasets during the annealing phase. For example, we had one small scale run that added `metamath` and improved our `GSM8k` score from `36.77` to `60.0`. We will publish detailed analysis and our findings in an upcoming paper.
 
 
 <details>
@@ -50,13 +50,13 @@ We compare Bamba and Falcon Mamba with SoTA transformer models (Meta Llama 3.1 8
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Bamba 9B (2.2T) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
-| Falcon Mamba 7B | 65.31 | 63.19 | 63.4 | 52.08 | 80.82 | 47.8 | 83.62 | 53.46 | 78.14 |
-| Meta Llama 3.1 8B | 63.51 | 66.26 | 57.85 | 49.96 | 81.98 | 46.8 | 82.54 | 45.16 | 77.51 |
-| IBM Granite v3 8B | 67.47 | 65.45 | 63.74 | 62.55 | 83.29 | 47.6 | 83.41 | 52.89 | 80.82 |
-| Olmo2 7B | 66.17 | 63.96 | 64.51 | 68.01 | 81.93 | 49.2 | 81.39 | 43.32 | 77.03 |
-| Gemma2 9B | 68.38 | 72.29 | 68.26 | 67.4 | 82.56 | 47.8 | 83.24 | 45.39 | 80.11 |
-| Qwen2.5 7B | 70.58 | 75.41 | 63.82 | 83.24 | 80.23 | 48.40 | 81.28 | 56.34 | 75.93 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
+| [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | 65.31 | 63.19 | 63.4 | 52.08 | 80.82 | 47.8 | 83.62 | 53.46 | 78.14 |
+| [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 63.51 | 66.26 | 57.85 | 49.96 | 81.98 | 46.8 | 82.54 | 45.16 | 77.51 |
+| [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 67.47 | 65.45 | 63.74 | 62.55 | 83.29 | 47.6 | 83.41 | 52.89 | 80.82 |
+| [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 66.17 | 63.96 | 64.51 | 68.01 | 81.93 | 49.2 | 81.39 | 43.32 | 77.03 |
+| [Gemma2 9B](https://huggingface.co/google/gemma-2-9b) | 68.38 | 72.29 | 68.26 | 67.4 | 82.56 | 47.8 | 83.24 | 45.39 | 80.11 |
+| [Qwen2.5 7B](https://huggingface.co/Qwen/Qwen2.5-7B) | 70.58 | 75.41 | 63.82 | 83.24 | 80.23 | 48.40 | 81.28 | 56.34 | 75.93 |
 
 </details>
 
@@ -64,13 +64,13 @@ We compare Bamba and Falcon Mamba with SoTA transformer models (Meta Llama 3.1 8
 
 | Model | Average | MMLU-PRO | BBH | GPQA | IFEval | MATH Lvl 5 | MuSR |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Bamba 9B (2.2T) | 10.91 | 17.53 | 17.4 | 4.14 | 15.16 | 1.66 | 9.59 |
-| Falcon Mamba 7B | 14.70 | 14.33 | 19.88 | 8.17 | 31.93 | 4.0 | 9.88 |
-| Meta Llama 3.1 8B | 14.27 | 25.46 | 25.16 | 8.61 | 12.55 | 5.14 | 8.72 |
-| IBM Granite v3 8B | 21.14 | 25.83 | 28.02 | 9.06 | 44.79 | 9.82 | 9.32 |
-| Olmo2 7B | 13.36 | 22.79 | 21.69 | 4.92 | 16.35 | 4.38 | 10.02 |
-| Gemma2 9B | 21.79 | 34.84 | 34.81 | 11.07 | 21.28 | 13.44 | 15.3 |
-| Qwen2.5 7B | 20.6 | 37.62 | 35.62 | 9.96 | 34.77 | 18.35 | 14.6 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 10.91 | 17.53 | 17.4 | 4.14 | 15.16 | 1.66 | 9.59 |
+| [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | 14.70 | 14.33 | 19.88 | 8.17 | 31.93 | 4.0 | 9.88 |
+| [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 14.27 | 25.46 | 25.16 | 8.61 | 12.55 | 5.14 | 8.72 |
+| [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 21.14 | 25.83 | 28.02 | 9.06 | 44.79 | 9.82 | 9.32 |
+| [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 13.36 | 22.79 | 21.69 | 4.92 | 16.35 | 4.38 | 10.02 |
+| [Gemma2 9B](https://huggingface.co/google/gemma-2-9b) | 21.79 | 34.84 | 34.81 | 11.07 | 21.28 | 13.44 | 15.3 |
+| [Qwen2.5 7B](https://huggingface.co/Qwen/Qwen2.5-7B) | 20.6 | 37.62 | 35.62 | 9.96 | 34.77 | 18.35 | 14.6 |
 
 ### Safety tasks
 
@@ -78,24 +78,24 @@ Safety benchmarks are crucial for ensuring AI models generate content that is et
 
 | Model | PopQA (5-shot, generation) | Toxigen (5-shot, logits) | BBQ (5-shot, generation) |
 | :---- | :---- | :---- | :---- |
-| Bamba-9B | 20.5 | 57.4 | 44.2 |
-| OLMo-2-1124-7B | 25.7 | 63.1 | 58.4 |
-| Gemma-2-9b | 27.3 | 69.6 | 59.9 |
-| Granite-3.0-8b-base | 27.5 | 79.9 | 82.1 |
-| Llama-3.1-8B | 28.8 | 67 | 60 |
-| Falcon-mamba-7b | 19.3 | 62.1 | 60.2 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 20.5 | 57.4 | 44.2 |
+| [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 25.7 | 63.1 | 58.4 |
+| [Gemma2 9B](https://huggingface.co/google/gemma-2-9b) | 27.3 | 69.6 | 59.9 |
+| [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 27.5 | 79.9 | 82.1 |
+| [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 28.8 | 67 | 60 |
+| [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | 19.3 | 62.1 | 60.2 |
 
 ## Comparison with transformers with similar token budget
 
-We pick a few promiment models: Olmo 7B trained on identical data (2024), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2 hybrid architecture is competitive with the tranformer models trained on the same dataset with similar token budget.
+We pick a few promiment models: [Olmo 7B trained on identical data (2024)](https://huggingface.co/allenai/OLMo-7B-0424-hf), Meta Llama2 7B (2023), and IBM Granite 7B (2023), which have been trained to \~2T tokens. While Olmo 7B outperforms Meta Llama2 and IBM Granite models across these 8 benchmarks, we note that with the same dataset, Bamba outperforms Olmo 7B. Since Bamba model has 9B parameters, a direct comparison is again difficult, but the main takeaway is that mamba2 hybrid architecture is competitive with the tranformer models trained on the same dataset with similar token budget.
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Bamba 9B (2.2T) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
-| Olmo1.5 7B | 48.31 | 28.57 | 45.22 | 4.62 | 77.1 | 43.2 | 81.01 | 35.85 | 70.88 |
-| Bamba 9B (2T) | 59.11 | 59.05 | 57.25 | 24.03 | 83.66 | 47.6 | 83.62 | 38.26 | 79.4 |
-| Meta Llama2 7B | 53.78 | 46.64 | 52.65 | 13.57 | 78.95 | 45.2 | 80.03 | 38.96 | 74.27 |
-| IBM Granite 7B | 52.07 | 49.02 | 49.91 | 10.84 | 77.0 | 40.8 | 80.14 | 38.7 | 70.17 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
+| Olmo1.5 7B | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| [Bamba 9B (2T)](https://huggingface.co/ibm-fms/Bamba-9B-2T) | 59.11 | 59.05 | 57.25 | 24.03 | 83.66 | 47.6 | 83.62 | 38.26 | 79.4 |
+| [Meta Llama2 7B](https://huggingface.co/meta-llama/Llama-2-7b-hf) | 53.78 | 46.64 | 52.65 | 13.57 | 78.95 | 45.2 | 80.03 | 38.96 | 74.27 |
+| [IBM Granite 7B](https://huggingface.co/ibm-granite/granite-7b-base) | 52.07 | 49.02 | 49.91 | 10.84 | 77.0 | 40.8 | 80.14 | 38.7 | 70.17 |
 
 <details>
 <summary>Mamba/Mamba2 comparisons</summary>
@@ -106,10 +106,10 @@ Several mamba/mamba2 architecture based models have started coming up in the las
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Bamba 9B (2.2T) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
 | NVIDIA Mamba2 Hybrid 8B\* | 58.78 | 53.6 | 47.7 | 77.69 | \-- | 42.8 | 79.65 | 38.72 | 71.27 |
-| Zamba 7B | 64.36 | 57.85 | 55.38 | 61.33 | 82.27 | 46.8 | 82.21 | 49.69 | 79.32 |
-| Falcon Mamba 7B | 65.31 | 63.19 | 63.4 | 52.08 | 80.82 | 47.8 | 83.62 | 53.46 | 78.14 |
+| [Zamba 7B](https://huggingface.co/Zyphra/Zamba-7B-v1) | 64.36 | 57.85 | 55.38 | 61.33 | 82.27 | 46.8 | 82.21 | 49.69 | 79.32 |
+| [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | 65.31 | 63.19 | 63.4 | 52.08 | 80.82 | 47.8 | 83.62 | 53.46 | 78.14 |
 
 \* Results are taken from [NVIDIA paper](https://arxiv.org/pdf/2406.07887).
 

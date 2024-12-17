@@ -53,14 +53,7 @@ Note that this training effort was started before FSDP2 and also long before we 
 For users trying to reproduce the training you now have much more options with our newly
 contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
 
-To reproduce the exact sequence of training data seen by Bamba, you must use the provided data as-is, without modifying directory structures or file names.
-The number of tokens per batch must also be 1.6 million (1,572,864 to be precise - 384 sequences of length 4096).
-Bamba was trained on 192 GPUs in parallel.
-For training on fewer than 192 GPUs, you can increase `num_workers` and `batch_size` to compensate, and the data sequence will remain unchanged.
-For example, using 64 GPUs with `num_workers=3, batch_size=6` will train identically to a model on 96 GPUs with `num_workers=2, batch_size=4`. 
-If batches at the adjusted `batch_size` become too large to fit in GPU, gradient accumulation with smaller `batch_size` will also keep the data sequence preserved, so long as total tokens per step remains at 1.6 million.
-
-The dataloader constructor takes a config argument and uses the config object to construct the data pipeline stages. Here's how you can reproduce our training pipeline:
+Here's how you can reproduce our training pipeline:
 ``` python
 git clone -b mamba-new https://github.com/foundation-model-stack/fms-fsdp.git
 cd fms-fsdp && pip install -e .
@@ -68,24 +61,24 @@ cd fms-fsdp && pip install -e .
 torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \
     main_training.py \
       --model_variant=mamba_9.8b \
+      --tokenizer_path="/path/to/tokenizer/" \
       --data_path="/path/to/dolma_v1.7/datasets/" \
-      --datasets="dataset=cc_en_head,dataset=cc_en_middle,dataset=cc_en_tail,dataset=falcon,dataset=starcoder,dataset=c4,dataset=reddit,dataset=pes2o,dataset=arxiv,dataset=stackexchange,dataset=tulu_flan,dataset=cc_news_head,dataset=cc_news_middle,dataset=cc_news_tail,dataset=open,dataset=algebraic,dataset=books,dataset=megawika,dataset=wiki" \
-      --weights=1456,1835,1558,1851,450,1500,300,236,114,200,100,62,27,11,51,49,100,55,45 \
+      --datasets="subdataset1subdataset2,subdataset3,subdataset4,..." \
+      --weights=1,1,1,1,.. \
       --seq_length=4096 \
       --vocab_size=128256 \
       --logical_shards=960 \
       --ckpt_load_path="/path/to/model/checkpoint" \
       --ckpt_save_path="/path/to/saving/model/checkpoint" \
-      --fsdp_activation_checkpointing=False
-      --selective_checkpointing=1
-      --sharding_strategy=fsdp
-      --low_cpu_fsdp=False
-      --batch_size=2
-      --num_steps=1280000
-      --learning_rate=3e-4
-      --report_interval=100
-      --checkpoint_interval=20000
+      --sharding_strategy=fsdp \
+      --batch_size=2 \
+      --num_steps=1280000 \
+      --learning_rate=3e-4 \
+      --num_steps=1280000 \
+      --report_interval=100 \
+      --checkpoint_interval=20000 \
 ```
+For exact reproduction of Bamba 9.8B using the same training data, access is available TODO:[here](Add link to dataloader readme). All fields listed there can be added as optional arguments to the training command (e.g. --eos_token=960 ).
 
 ## Benchmark scores
 

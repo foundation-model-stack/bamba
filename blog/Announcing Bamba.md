@@ -92,7 +92,7 @@ We pick a few promiment models: Olmo 7B trained on identical data (2024), Meta L
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
-| [Olmo1.5 7B](https://huggingface.co/allenai/OLMo-7B-0424-hf) | TBD | 50.51 | TBD | TBD | TBD | 45.2 | 81.56 | 35.92 | 73.09 |
+| [Olmo1.5 7B](https://huggingface.co/allenai/OLMo-7B-0424-hf) | 55.8 | 53.38 | 50.51 | 27.67 | 79.13 | 45.2 | 81.56 | 35.92 | 73.09 |
 | [Bamba 9B (2T)](https://huggingface.co/ibm-fms/Bamba-9B-2T) | 59.11 | 59.05 | 57.25 | 24.03 | 83.66 | 47.6 | 83.62 | 38.26 | 79.4 |
 | [Meta Llama2 7B](https://huggingface.co/meta-llama/Llama-2-7b-hf) | 53.78 | 46.64 | 52.65 | 13.57 | 78.95 | 45.2 | 80.03 | 38.96 | 74.27 |
 | [IBM Granite 7B](https://huggingface.co/ibm-granite/granite-7b-base) | 52.07 | 49.02 | 49.91 | 10.84 | 77.0 | 40.8 | 80.14 | 38.7 | 70.17 |

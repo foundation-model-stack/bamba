@@ -74,6 +74,8 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
    </td>
    <td><strong>Benchmark</strong>
    </td>
+   <td><strong>Setting</strong></td>
+   <td><strong>Metric</strong></td>
    <td><strong>Bamba 9B (2.2T)</strong>
    </td>
   </tr>
@@ -82,48 +84,64 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
    </td>
    <td>MMLU
    </td>
+   <td>5-shot</td>
+   <td>Accuracy</td>
    <td>60.77
    </td>
   </tr>
   <tr>
    <td>ARC-C
    </td>
+  <td>25-shot</td>
+   <td>Accuracy normalized</td>
    <td>63.23
    </td>
   </tr>
   <tr>
    <td>GSM8K
    </td>
+    <td>5-shot</td>
+   <td>exact match</td>
    <td>36.77
    </td>
   </tr>
   <tr>
    <td>Hellaswag
    </td>
+    <td>10-shot</td>
+   <td>Accuracy normalized</td>
    <td>81.8
    </td>
   </tr>
   <tr>
    <td>OpenbookQA
    </td>
+    <td>5-shot</td>
+   <td>Accuracy normalized</td>
    <td>47.6
    </td>
   </tr>
   <tr>
    <td>Piqa
    </td>
+    <td>5-shot</td>
+   <td>Accuracy normalized</td>
    <td>82.26
    </td>
   </tr>
   <tr>
    <td>TruthfulQA
    </td>
+     <td>0-shot</td>
+   <td>Accuracy</td>
    <td>49.21
    </td>
   </tr>
   <tr>
    <td>Winogrande
    </td>
+     <td>5-shot</td>
+   <td>Accuracy</td>
    <td>76.87
    </td>
   </tr>
@@ -132,57 +150,83 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
    </td>
    <td>MMLU-PRO	
    </td>
+     <td>5-shot</td>
+   <td>Accuracy</td>
    <td>17.53
    </td>
   </tr>
   <tr>
    <td>BBH
    </td>
+     <td>3-shot</td>
+   <td>Accuracy normalized</td>
    <td>17.4
    </td>
   </tr>
   <tr>
    <td>GPQA
    </td>
+     <td>0-shot</td>
+   <td>Accuracy normalized</td>
    <td>4.14
    </td>
   </tr>
   <tr>
    <td>IFEval
    </td>
+     <td>0-shot</td>
+   <td>inst_level_strict_acc + prompt_level_strict_acc</td>
    <td>15.16
    </td>
   </tr>
   <tr>
    <td>MATH Lvl 5	
    </td>
+    <td>4-shot</td>
+   <td>Exact match</td>
    <td>1.66
    </td>
   </tr>
   <tr>
    <td>MuSR
    </td>
+    <td>0-shot</td>
+   <td>Accuracy normalized</td>
    <td>9.59
    </td>
   </tr>
   <tr>
-   <td rowspan="3" >Safety Tasks
+   <td rowspan="4" >Safety Tasks
    </td>
-   <td>PopQA (5-shot, generation)	
+   <td>PopQA
    </td>
+     <td>5-shot, generation</td>
+   <td>Accuracy</td>
    <td>20.5
    </td>
   </tr>
   <tr>
-   <td>Toxigen (5-shot, logits)	
+   <td>Toxigen
    </td>
+    <td>5-shot, logits</td>
+   <td>Accuracy</td>
    <td>57.4
    </td>
   </tr>
   <tr>
-   <td>BBQ (5-shot, generation)
+   <td>BBQ
    </td>
+     <td>5-shot, generation</td>
+   <td>Accuracy</td>
    <td>44.2
+   </td>
+    </tr>
+  <tr>
+   <td>Crows-pairs_english
+   </td>
+    <td>5-shot, generation</td>
+   <td>pct_stereotype (lower is better)</td>
+   <td>70.78
    </td>
   </tr>
 </table>

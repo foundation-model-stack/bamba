@@ -32,6 +32,11 @@ git clone https://github.com/Dao-AILab/flash-attention.git
 cd flash-attention && pip install . && cd ..
 ```
 
+For users using our HF versions of the model, you would need to install the latest transformers which includes our newly merged implementation for our Bamba models:
+```bash
+pip install git+https://github.com/huggingface/transformers.git
+```
+
 ## Models
 
 | Model | Params     | # Layers | Hidden Dim. | Attention Heads | GQA  | KV Heads | Context Length | Tied Embeddings |

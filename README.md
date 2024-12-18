@@ -47,12 +47,6 @@ python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms
 
 ## Training
 
-We trained our Bamba model with FSDP using our training repo [here](https://github.com/foundation-model-stack/fms-fsdp/tree/mamba-new).
-Note that this training effort was started before FSDP2 and also long before we contributed
-`Mamba2-Hybrid` to HF, so we were doing FSDP1 training with [official Mamba implementation](https://github.com/state-spaces/mamba).
-For users trying to reproduce the training you now have much more options with our newly
-contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
-
 Details on training can be found [here](https://github.com/foundation-model-stack/bamba/blob/8eaf524806020a6740fcbd107d610a613d3a2955/training/training.md).
 
 <!---

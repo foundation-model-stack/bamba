@@ -6,7 +6,7 @@
 
 
 <p align="center">
-        🤗 <a href="https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab"> Bamba on Hugging Face</a>&nbsp | <a href="https://github.com/foundation-model-stack/bamba/blob/main/blog/bamba-9b-release.md"> Bamba Blog</a>&nbsp | <a href="https://huggingface.co/blog/bamba">
+        🤗 <a href="https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab"> Bamba on Hugging Face</a>&nbsp | <a href="https://huggingface.co/blog/bamba"> Bamba Blog</a>&nbsp
 <be>
 
 

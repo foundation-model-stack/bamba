@@ -68,7 +68,7 @@ print(tokenizer.batch_decode(response, skip_special_tokens=True)[0])
 
 ## Training
 
-We trained our Bamba model with FSDP using our training repo [here](https://github.com/foundation-model-stack/fms-fsdp/tree/mamba-new).
+We trained our Bamba model with FSDP using our training repo [here](https://github.com/foundation-model-stack/fms-fsdp).
 Note that this training effort was started before FSDP2 and also long before we contributed
 `Mamba2-Hybrid` to HF, so we were doing FSDP1 training with [official Mamba implementation](https://github.com/state-spaces/mamba).
 For users trying to reproduce the training you now have much more options with our newly

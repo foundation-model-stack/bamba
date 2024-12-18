@@ -39,9 +39,9 @@ pip install git+https://github.com/huggingface/transformers.git
 
 ## Models
 
-| Model            | Params       | # Layers | Hidden Dim. | Attention Heads | GQA | KV Heads | Context Length |  Tied Embeddings |
-|-------------------|--------------|----------|-------------|-----------------|-----|----------|----------------|------------------|
-| Bamba  | 9B (9.78B)   | 32       | 4096        | 32              | Yes | 8        | 4096           | False |
+| Model | Params     | # Layers | Hidden Dim. | Attention Heads | GQA  | KV Heads | Context Length | Tied Embeddings |
+| ----- | ---------- | -------- | ----------- | --------------- | ---- | -------- | -------------- | --------------- |
+| Bamba | 9B (9.78B) | 32       | 4096        | 32              | Yes  | 8        | 4096           | False           |
 
 ### Checkpoints
 We have published our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)

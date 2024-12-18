@@ -59,7 +59,7 @@ git clone -b mamba-new https://github.com/foundation-model-stack/fms-fsdp.git
 cd fms-fsdp && pip install -e .
 
 torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \
-    main_training.py \
+    main_training_mamba.py \
       --model_variant=mamba_9.8b \
       --tokenizer_path="/path/to/tokenizer/" \
       --data_path="/path/to/datasets/" \

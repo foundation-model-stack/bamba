@@ -48,7 +48,7 @@ You can find links to our model checkpoints here: [Bamba Models](https://hugging
 
 ## Inference
 
-You can utilize our newly contributed HF integration to run inference on our Bamba models:
+You can use the following command to perform text generation using one of our checkpoints provided above:
 
 ```python
 python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms/Bamba-9B --prompt "The largest living mammal on Earth is " --max_new_tokens 128

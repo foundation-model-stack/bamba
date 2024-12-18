@@ -228,13 +228,13 @@ config.tokenizer_path = "path/to/hf/tokenizer"
 Note that `tokenizer_path` must point to a HuggingFace tokenizer, and `col_name` may vary from dataset to dataset. `"text"` is common but not universal. `"auto"` will also work for `file_type`.
 
 ### 3) Add support for your own file type
-The FileHandler class stub (TODO: link once mamba_new is PRed) allows support for arbitrary file types. Simply implement 5 basic functions:
+The FileHandler [class stub](https://github.com/foundation-model-stack/fms-fsdp/blob/0e47e934e69a340a7a2183b15b5f24979eb9db9c/fms_fsdp/utils/dataset_utils.py#L286) allows support for arbitrary file types. Simply implement 5 basic functions:
 1. `is_legal`: given a file name, is this a parseable shard file?
 2. `open`: given a path to a file, return an indexable object
 3. `length`: given a path to a file, return the number of documents in the file
 4. `get`: given an indexable object and an index, return the document at that index. Remove BOS/EOS tokens as needed
 5. `slice`: given a returned document, a starting index, and a number of tokens, return those tokens as a list
 
-Simply implement a FileHandler class for your desired shard file format with the above operations. An example incorporating a tokenizer can be found here (TODO: link once mamba_new is PRed). Then override the existing FileHandler here (TODO: link once mamba_new is PRed) with your new class, and your data files are now supported.
+Simply implement a FileHandler class for your desired shard file format with the above operations. An example incorporating a tokenizer can be found [here](https://github.com/foundation-model-stack/fms-fsdp/blob/0e47e934e69a340a7a2183b15b5f24979eb9db9c/fms_fsdp/utils/dataset_utils.py#L371). Then override the existing FileHandler [here](https://github.com/foundation-model-stack/fms-fsdp/blob/0e47e934e69a340a7a2183b15b5f24979eb9db9c/fms_fsdp/utils/dataloader_utils.py#L98) with your new class, and your data files are now supported.
 
 Happy training!

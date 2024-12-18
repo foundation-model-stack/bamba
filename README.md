@@ -44,36 +44,23 @@ pip install git+https://github.com/huggingface/transformers.git
 | Bamba | 9B (9.78B) | 32       | 4096        | 32              | Yes  | 8        | 4096           | False           |
 
 ### Checkpoints
-
-We have published our model checkpoints here: TODO: add mamba HF page once public
-
+We have published our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)
 
 ## Inference
 
 You can utilize our newly contributed HF integration to run inference on our Bamba models:
 
 ```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model = AutoModelForCausalLM.from_pretrained("ibm-fms/Bamba-9B")
-tokenizer = AutoTokenizer.from_pretrained("ibm-fms/Bamba-9B")
-
-message = ["Mamba is a snake with following properties  "]
-inputs = tokenizer(message, return_tensors='pt', return_token_type_ids=False)
-response = model.generate(**inputs, max_new_tokens=64)
-print(tokenizer.batch_decode(response, skip_special_tokens=True)[0])
-
+python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms/Bamba-9B --prompt "The largest living mammal on Earth is " --max_new_tokens 128
 ```
-
 
 ## Training
 
-We trained our Bamba model with FSDP using our training repo [here](https://github.com/foundation-model-stack/fms-fsdp).
-Note that this training effort was started before FSDP2 and also long before we contributed
-`Mamba2-Hybrid` to HF, so we were doing FSDP1 training with [official Mamba implementation](https://github.com/state-spaces/mamba).
-For users trying to reproduce the training you now have much more options with our newly
-contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
+Details on training can be found [here](https://github.com/foundation-model-stack/bamba/blob/8eaf524806020a6740fcbd107d610a613d3a2955/training/training.md).
 
+<!---
+For exact reproduction of Bamba 9.8B using the same training data, access is available TODO:[here](Add link to dataloader readme). All fields listed there can be added as optional arguments to the training command (e.g. `--eos_token=128000`).
+--->
 
 ## Benchmark scores
 

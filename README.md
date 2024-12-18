@@ -77,7 +77,9 @@ torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \
       --report_interval=100 \
       --checkpoint_interval=20000 \
 ```
+<!---
 For exact reproduction of Bamba 9.8B using the same training data, access is available TODO:[here](Add link to dataloader readme). All fields listed there can be added as optional arguments to the training command (e.g. `--eos_token=128000`).
+--->
 
 ## Benchmark scores
 

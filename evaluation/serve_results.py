@@ -29,6 +29,28 @@ if __name__ == "__main__":
 
     st.title("🚀🚀🚀 Evals for Bamba model release 🚀🚀🚀")
 
+    df = df[
+        [
+            "model",
+            "MWR",
+            "MMLU",
+            "ARC-C",
+            "GSM8K",
+            "Hellaswag",
+            "OpenbookQA",
+            "Piqa",
+            "TruthfulQA",
+            "Winogrande",
+            "Boolq",
+            "MMLU-PRO",
+            "BBH",
+            "GPQA",
+            "IFEval",
+            "MATH Lvl 5",
+            "MuSR",
+        ]
+    ]
+
     with st.form("model selector"):
         selected_models = st.multiselect(
             "Choose models", options=df.model.unique(), default=df.model.unique()

@@ -4,8 +4,8 @@
 
 initialize and environment, sometimes `conda` makes it easier to handle cuda installations:
 ```bash
-conda create -n bamba_vllm python=3.11 -y
-conda activate bamba_vllm
+conda create -n bamba python=3.11 -y
+conda activate bamba
 ```
 
 Instal cuda toolkit:

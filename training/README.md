@@ -31,4 +31,4 @@ torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \
       --report_interval=100 \
       --checkpoint_interval=20000 \
 ```
-To reproduce the exact model as Bamba-9B, you can find the training configs [here](training/data/README.md).
+To reproduce the exact model as Bamba-9B, you can find the training configs [here](data/README.md).

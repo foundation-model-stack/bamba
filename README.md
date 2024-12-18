@@ -44,7 +44,7 @@ pip install git+https://github.com/huggingface/transformers.git
 | Bamba | 9B (9.78B) | 32       | 4096        | 32              | Yes  | 8        | 4096           | False           |
 
 ### Checkpoints
-We have published our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)
+You can find links to our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)
 
 ## Inference
 

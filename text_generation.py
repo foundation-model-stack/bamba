@@ -10,7 +10,7 @@ def main(model_path, tokenizer_path, prompt, max_new_tokens=100):
     inputs = tokenizer([prompt], return_tensors='pt', return_token_type_ids=False)
     
     # Generate response
-    response = model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=True, top_k=50, top_p=0.95)
+    response = model.generate(**inputs, max_new_tokens=max_new_tokens)
     
     # Decode and print the result
     decoded_output = tokenizer.batch_decode(response, skip_special_tokens=True)[0]

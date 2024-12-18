@@ -55,7 +55,7 @@ contributed [HF-version of Mamba2-Hybrid]() (TODO: add link once live).
 
 Here's how you can train the model:
 ``` python
-git clone -b mamba-new https://github.com/foundation-model-stack/fms-fsdp.git
+git clone https://github.com/foundation-model-stack/fms-fsdp.git
 cd fms-fsdp && pip install -e .
 
 torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \

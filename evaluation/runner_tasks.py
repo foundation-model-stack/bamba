@@ -106,4 +106,30 @@ runner_tasks = {
         {"task": "Winogrande", "num_fewshot": 5, "subtasks": ["winogrande"]},
         {"task": "GSM8k", "num_fewshot": 5, "subtasks": ["gsm8k"]},
     ],
+    "Safety_BBQ": [
+        {"task": "bbq_Age_temp_0_few_shot_5", "num_fewshot": None, "subtasks": ["bbq_Age_temp_0_few_shot_5"]},
+        {"task": "bbq_Disability_status_temp_0_few_shot_5", "num_fewshot": None,
+        "subtasks": ["bbq_Disability_status_temp_0_few_shot_5"]},
+        {"task": "bbq_Gender_identity_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Gender_identity_temp_0_few_shot_5"]},
+        {"task": "bbq_Nationality_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Nationality_temp_0_few_shot_5"]},
+        {"task": "bbq_Physical_appearance_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Physical_appearance_temp_0_few_shot_5"]},
+        {"task": "bbq_Race_ethnicity_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Race_ethnicity_temp_0_few_shot_5"]},
+        {"task": "bbq_Race_x_gender_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Race_x_gender_temp_0_few_shot_5"]},
+        {"task": "bbq_Race_x_SES_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Race_x_SES_temp_0_few_shot_5"]},
+        {"task": "bbq_Religion_temp_0_few_shot_5", "num_fewshot": None, "subtasks": ["bbq_Religion_temp_0_few_shot_5"]},
+        {"task": "bbq_SES_temp_0_few_shot_5", "num_fewshot": None, "subtasks": ["bbq_SES_temp_0_few_shot_5"]},
+        {"task": "bbq_Sexual_orientation_temp_0_few_shot_5", "num_fewshot": None,
+         "subtasks": ["bbq_Sexual_orientation_temp_0_few_shot_5"]},
+    ],
+    "Safety": [
+        {"task": "toxigen", "num_fewshot": 5, "subtasks": ["toxigen"]},
+        {"task": "pop_qa_temp_0_few_shot_5", "num_fewshot": None, "subtasks": ["pop_qa_temp_0_few_shot_5"]},
+        {"task": "crows_pairs_english", "num_fewshot": 5, "subtasks": ["crows_pairs_english"]}
+    ]
 }

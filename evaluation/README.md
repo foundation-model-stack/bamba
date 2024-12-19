@@ -4,8 +4,8 @@
 
 initialize and environment, sometimes `conda` makes it easier to handle cuda installations:
 ```bash
-conda create -n bamba_vllm python=3.11 -y
-conda activate bamba_vllm
+conda create -n bamba python=3.11 -y
+conda activate bamba
 ```
 
 Instal cuda toolkit:
@@ -23,12 +23,17 @@ pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d@v1.4
 pip install git+https://github.com/fabianlim/transformers.git@pr-draft
 ```
 
-To run the benchmark, clone lm-evaluation-harness, and install it along with some other dependencies
+To run the benchmark, install lm-evaluation-harness and unitxt (www.unitxt.ai), along with some other dependencies
 
 ```bash
-git clone git@github.com:EleutherAI/lm-evaluation-harness.git
-pip install -e path/to/lmeval/.
+pip install lm_eval
+pip install unitxt
 pip install langdetect immutabledict antlr4-python3-runtime==4.11 sacrebleu streamlit boto3 matplotlib loguru
+```
+
+Link Unitxt to Lm-Eval-Harness (see https://www.unitxt.ai/en/latest/docs/lm_eval.html)
+``` 
+python -c 'from lm_eval.tasks.unitxt import task; import os.path; print("class: !function " + task.__file__.replace("task.py", "task.Unitxt"))' > ./unitxt_cards_for_lm_eval/unitxt
 ```
 
 ### Running the benchmark

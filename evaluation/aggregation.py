@@ -11,7 +11,7 @@ from pretty_names import get_pretty_name
 from evaluation.aggregation_utils import handle_duplicates
 
 
-def get_results_df(res_dir_paths, results_from_papers_path):
+def get_results_df(res_dir_paths, results_from_papers_path=None):
     res_list = []
     for res_dir in res_dir_paths:
         res_file_paths = glob.glob(f"{res_dir}/**/results_*", recursive=True)
@@ -84,18 +84,18 @@ def get_results_df(res_dir_paths, results_from_papers_path):
     res_df = res_df.groupby(["model", "scenario"]).agg({"score": "mean"}).reset_index()
 
     res_df["score"] = res_df["score"] * 100
-
-    df_from_papers = pd.read_csv(results_from_papers_path)
-    df_from_papers = pd.melt(
-        df_from_papers,
-        id_vars="scenario",
-        var_name="model",
-        value_name="score",
-    )
-    df_from_papers = df_from_papers.dropna()
-
     res_df["scenario"] = res_df["scenario"].apply(lambda x: get_pretty_name(x))
-    res_df = pd.concat([res_df, df_from_papers])
+
+    if results_from_papers_path:
+        df_from_papers = pd.read_csv(results_from_papers_path)
+        df_from_papers = pd.melt(
+            df_from_papers,
+            id_vars="scenario",
+            var_name="model",
+            value_name="score",
+        )
+        df_from_papers = df_from_papers.dropna()
+        res_df = pd.concat([res_df, df_from_papers])
 
     if len(res_df[res_df.duplicated(subset=["model", "scenario"])]) > 0:
         res_df = handle_duplicates(res_df)
@@ -105,6 +105,12 @@ def get_results_df(res_dir_paths, results_from_papers_path):
         lambda x: x.replace("/dccstor/fme/users/yotam/models/", "ibm-fms/")
     )
 
+    # df_pivot_score.to_csv("output/combined_results.csv", index=False)
+
+    return res_df
+
+
+def add_mwr_col(res_df):
     def calculate_win_rate(series):
         assert len(series) > 1, "no meaning for a win rate with only one object"
 
@@ -122,6 +128,10 @@ def get_results_df(res_dir_paths, results_from_papers_path):
     mean_df["scenario"] = "MWR"
     res_df = pd.concat([res_df, mean_df]).drop(columns=["wr"])
 
+    return res_df
+
+
+def pivot_df(res_df):
     # Pivot the DataFrame
     df_pivot_score = res_df.pivot(
         index="model", columns="scenario", values=["score"]
@@ -131,8 +141,6 @@ def get_results_df(res_dir_paths, results_from_papers_path):
         for level0, level1 in df_pivot_score.columns
     ]
     df_pivot_score.columns = flat_index
-    # df_pivot_score.to_csv("output/combined_results.csv", index=False)
-
     return df_pivot_score
 
 

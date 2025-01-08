@@ -58,8 +58,14 @@ def parse_args():
         help="Type of GPU to request for the job. (default: 'a100_80gb')",
     )
     parser.add_argument(
-        "--cores",
-        default="8+1",
+        "--cpu_cores",
+        default="8",
+        help="Number of CPU cores to request. (default: '8+1')",
+    )
+    parser.add_argument(
+        "--gpu_cores",
+        default=1,
+        type=int,
         help="Number of CPU cores to request. (default: '8+1')",
     )
     parser.add_argument(
@@ -117,6 +123,11 @@ def parse_args():
         "--dry_run",
         action="store_true",
         help="If set, runs will not be sent",
+    )
+
+    parser.add_argument(
+        "--apply_chat_template",
+        action="store_true",
     )
 
     args = parser.parse_args()
@@ -187,6 +198,9 @@ def run_job(model_id, task_to_run, args):
             raise NotImplementedError(
                 f"current precision {args.fp_precision} is not supported, only [4,8,16]"
             )
+    if args.gpu_cores > 1:
+        model_args += ",parallelize=True"
+
     # elif model_engine == "vllm":
     #     if args.fp_precision == 8:
     #         model_args += "quantization=compressed-tensors"
@@ -199,7 +213,7 @@ def run_job(model_id, task_to_run, args):
             "-mem",
             args.memory,
             "-cores",
-            args.cores,
+            f"{args.cpu_cores}+{args.gpu_cores}",
             "-require",
             args.req_gpu,
             "-q",
@@ -245,6 +259,9 @@ def run_job(model_id, task_to_run, args):
         command.append(
             f"--num_fewshot={task_to_run['num_fewshot']}",
         )
+
+    if args.apply_chat_template:
+        command.append("--apply_chat_template")
 
     job_id = get_job_id(
         model_id, output_path, [str(item) for item in command], args.dry_run

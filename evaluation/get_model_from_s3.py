@@ -31,11 +31,20 @@ def download_from_s3(prefix, local_path, bucket_name, endpoint_url):
     )
     paginator = s3.get_paginator("list_objects_v2")
     pages = paginator.paginate(Bucket=bucket_name, Prefix=prefix)
+    # logger.info(f"prefix is {prefix}")
 
     for page in pages:
         for obj in page.get("Contents", []):
             key = obj["Key"]
-            local_file_path = os.path.join(local_path, os.path.relpath(key, prefix))
+
+            if key.endswith("/"):
+                continue
+
+            local_file_path = os.path.join(
+                local_path, prefix, os.path.relpath(key, prefix)
+            )
+            # logger.info(f"local_file_path is {local_file_path}")
+
             if os.path.exists(local_file_path):
                 logger.info(f"{local_file_path} already exists, skipping...")
                 continue

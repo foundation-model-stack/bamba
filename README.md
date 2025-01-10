@@ -56,7 +56,7 @@ python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms
 
 ## Training
 
-Details on training can be found [here](./training/training.md).
+Details on training can be found [here](./training/README.md).
 
 <!---
 For exact reproduction of Bamba 9.8B using the same training data, access is available TODO:[here](Add link to dataloader readme). All fields listed there can be added as optional arguments to the training command (e.g. `--eos_token=128000`).

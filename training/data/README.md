@@ -237,4 +237,38 @@ The FileHandler [class stub](https://github.com/foundation-model-stack/fms-fsdp/
 
 Simply implement a FileHandler class for your desired shard file format with the above operations. An example incorporating a tokenizer can be found [here](https://github.com/foundation-model-stack/fms-fsdp/blob/0e47e934e69a340a7a2183b15b5f24979eb9db9c/fms_fsdp/utils/dataset_utils.py#L371). Then override the existing FileHandler [here](https://github.com/foundation-model-stack/fms-fsdp/blob/0e47e934e69a340a7a2183b15b5f24979eb9db9c/fms_fsdp/utils/dataloader_utils.py#L98) with your new class, and your data files are now supported.
 
+### Folder Structure
+
+Whatever file type you're using, the dataloader expects a nested folder structure. All subdatasets should be folders sitting under your specified `datapath`, though neither the dataset nor subdataset directories need to be flat. Name collisions are generally not an issue. For example, we could support the following (slightly pathological) dataset:
+```
+dataset_path
+    subdataset_1
+        file_shard_1.parquet
+        file_shard_2.parquet
+    subdataset_2
+        file_shard_1.parquet
+    subdataset_3
+        subdataset_1
+            file_shard_1.parquet
+        subdataset_2
+            file_shard_2.parquet
+```
+If we want to sample over the three top-level subdatasets equally, we can use the following:
+```bash
+--datapath dataset_path
+--file_type hf_parquet
+--datasets "subdataset_1,subdataset_2,subdataset_3"
+--weights "1,1,1"
+```
+And the dataloader will sample evenly over the three top-level subdatasets, finding all parquet files under nested folders in `subdataset_3`.
+
+If we instead want to treat `subdataset_3` as two independent datasets, we can instead use:
+```bash
+--datapath dataset_path
+--file_type hf_parquet
+--datasets "subdataset_1,subdataset_2,subdataset_3/subdataset_1,subdataset_3/subdataset_2"
+--weights "1,1,1,1"
+```
+And the dataloader will sample evenly over our (now) four subdatasets.
+
 Happy training!

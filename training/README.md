@@ -31,7 +31,7 @@ torchrun --nnodes=24 --node_rank=0 --nproc_per_node=8 \
       --report_interval=100 \
       --checkpoint_interval=20000 \
 ```
-To reproduce the exact model as Bamba-9B, you can find the training configs [here](data/README.md).
+To reproduce the exact model as Bamba-9B, or train using your own data or models, further config details are [here](data/README.md).
 
 ## Continuing Training
 
@@ -41,10 +41,10 @@ Training can be continued from a completed run's final saved checkpoint in multi
  3. Restore the entire model, optimizer, and dataloader state.
 
 If the completed run was configured with `--ckpt_save_path="/path/to/prev/ckpt"`, then a single
-`consolidated.00.pth` file containing the model weights only is created at the root level, while
+`consolidated.00.pth` file containing the final model weights only is created under `"/path/to/pref/ckpt/pth"`, while
 sharded checkpoint files which also capture the optimizer and dataloader state exist under
 `"/path/to/prev/ckpt/checkpoints"`. The three scenarios above are then achieved by specifying:
- 1. **Model Only**: `--ckpt_load_path="/path/to/prev/ckpt/consolidated.00.pth"`
+ 1. **Model Only**: `--ckpt_load_path="/path/to/prev/ckpt/pth/consolidated.00.pth"`
  2. **Model + Optimizer**: `--ckpt_load_path="/path/to/prev/ckpt/"`
  3. **Model + Optimizer + Dataloader**: `--ckpt_load_path="/path/to/prev/ckpt/" --resuming_dataset`
 

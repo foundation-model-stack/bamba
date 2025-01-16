@@ -40,11 +40,11 @@ Training can be continued from a completed run's final saved checkpoint in multi
  2. Restore the model and optimizer state.
  3. Restore the entire model, optimizer, and dataloader state.
 
-If the completed run was configured with `"--ckpt_save_path=/path/to/prev/ckpt"`, then a single
+If the completed run was configured with `--ckpt_save_path="/path/to/prev/ckpt"`, then a single
 `consolidated.00.pth` file containing the model weights only is created at the root level, while
 sharded checkpoint files which also capture the optimizer and dataloader state exist under
-`/path/to/prev/ckpt/checkpoints`. The three scenarios above are then achieved by specifying:
- 1. **Model Only**: `--ckpt_load_path=/path/to/prev/ckpt/consolidated.00.pth`
- 2. **Model + Optimizer**: `--ckpt_load_path=/path/to/prev/ckpt/`
- 3. **Model + Optimizer + Dataloader**: `--ckpt_load_path=/path/to/prev/ckpt/ --resuming_dataset`
+`"/path/to/prev/ckpt/checkpoints"`. The three scenarios above are then achieved by specifying:
+ 1. **Model Only**: `--ckpt_load_path="/path/to/prev/ckpt/consolidated.00.pth"`
+ 2. **Model + Optimizer**: `--ckpt_load_path="/path/to/prev/ckpt/"`
+ 3. **Model + Optimizer + Dataloader**: `--ckpt_load_path="/path/to/prev/ckpt/" --resuming_dataset`
 

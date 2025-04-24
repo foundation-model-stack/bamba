@@ -3,6 +3,9 @@
 During Christmas of 2024, IBM, Princeton, CMU, and UIUC [released](https://huggingface.co/blog/bamba) a performant Mamba2 based pretrained model with full data lineage trained to 2T tokens. Since then, we have been busy cooking an update with new datasets. Today, we are excited to release Bamba v2 trained for an additional 1T tokens that significantly improves on the previous checkpoint. The L1 and L2 leaderboard scores outperform Llama 3.1 8B, which was trained with nearly 5x the amount of data. All of this with the inference speedup that we get from Mamba2 based architecture, which with the latest vLLM is 2-2.5x faster than similar sized transformer models.
 
 ## Artifacts 📦
+1. [Hugging Face Bamba collection](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab) 
+2. [GitHub repo with inference, training, and tuning scripts](https://github.com/foundation-model-stack/bamba)
+3. [vLLM RFC](TODO)
 
 ## Fast and Powerful ⚡🏎️ 
 

@@ -1,6 +1,6 @@
 # Bamba9B - Fast and powerful!
 
-During Christmas of 2024, IBM, Princeton, CMU, and UIUC [released](https://huggingface.co/blog/bamba) a performant Mamba2 based pretrained model with full data lineage trained to 2T tokens. Since then, we have been busy cooking an update with new datasets. Today, we are excited to release Bamba v2 trained for an additional 1T tokens that significantly improves on the previous checkpoint. The L1 and L2 leaderboard scores outperform Llama 3.1 8B, which was trained with nearly 5x the amount of data. All of this with the inference speedup that we get from Mamba2 based architecture, which with the latest vLLM is 2-2.5x faster than similar sized transformer models.
+During Christmas of 2024, IBM, Princeton, CMU, and UIUC [released](https://huggingface.co/blog/bamba), Bamba v1, a performant Mamba2 based pretrained model with full data lineage trained to 2T tokens. Since then, we have been busy cooking an update with new datasets. Today, we are excited to release Bamba v2, trained for an additional 1T tokens that significantly improves on Bamba v1. The L1 and L2 leaderboard scores outperform Llama 3.1 8B, which was trained with nearly 5x the amount of data. All of this with the inference speedup that we get from Mamba2 based architecture, which with the latest vLLM is 2-2.5x faster than similar sized transformer models.
 
 ## Artifacts 📦
 1. [Hugging Face Bamba collection](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab) 
@@ -62,7 +62,7 @@ We took the 2T base checkpoint (aka Bamba 9b v1) and extended it by adding [Olmo
 _Table 1:_ <strong> 2-2.5T Olmo2 mix data</strong>
 
 
-We then used a mix of synthetic data from Nemotron-CC and Hugging Face datasets to continue training on 500B additional tokens, putting us at 3T tokens. During this phase, we launch two jobs, one with constant learning rate at 2e-5 and another with cosine learning rate going from 2e-5 ending at 2e-6. In our experiments, we observe that using these learning rate schedules improves different benchmarks. Our general observation is that cosine improves memorization benchmarks and constant improves knowledge. The data mixes for 2.5T to 3T are as follows.
+We then used a mix of synthetic data from Nemotron-CC and Hugging Face datasets to continue training on 500B additional tokens, putting us at 3T tokens. During this phase, we launch two jobs (serially) to perform an ablation on learning rate schedules, one with constant learning rate at 2e-5 and another with cosine learning rate going from 2e-5 ending at 2e-6. Our general observation is that cosine and constant learning rate schedulers are complementary. The data mixes for 2.5T to 3T are as follows.
 
 | Dataset | Subdataset | Percentage |
 | :---- | :----- | :---- |

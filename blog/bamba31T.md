@@ -5,7 +5,9 @@ During Christmas of 2024, IBM, Princeton, CMU, and UIUC [released](https://huggi
 ## Artifacts 📦
 
 ## Fast and Powerful ⚡🏎️ 
-We rerun all the benchmarks following the setup and scripts [here]() similar to our previous release. We run the benchmarks for various popular 
+
+> **Evaluation setup ⚙️ 🖥️:**
+We rerun all the benchmarks following the setup and scripts [here](https://github.com/foundation-model-stack/bamba/blob/main/evaluation/README.md) for all models. For the v2 leaderboard results, we perform [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized results. In all the evaluations, higher is better except where indicated.
 
 While the HF leaderboards themselves are [not active](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard/discussions/1135) anymore since models evolve, comparing the key benchmarks is an important measure of model capabilities. We provide these comparisons below for various benchmarks. We observe that compared to other SoTA models that are trained to at least 10T+ tokens (and in many cases 15T+), Bamba 9B v2 outperforms the popular Llama 3.1 8B base model on both L1 and L2 averages.
 
@@ -97,10 +99,18 @@ Finally, we anneal both these models using very high quality data for 100B addit
 
 _Table 3:_ <strong> 3T-3.1T Custom mix data for annealing</strong>
 
-A note on instruction tuning: We have experimented with [Tuluv3 data]() for creating an instruction following model leveraging [Open Instruct](). We observe that the 
+> **Note on instruction tuning** 🧠🔧📘 
+ We have experimented with [Tuluv3 data](https://huggingface.co/collections/allenai/tulu-3-datasets-673b8df14442393f7213f372) for creating an instruction following model leveraging [Open Instruct](https://github.com/allenai/open-instruct). We observe that the model's performance improves significantly across various benchmarks with a L1 average of 64.69 and an L2 average of 24.68. We are working on an instruction following model that has non-restricted data.
 
 ## vLLM integration 📥🧠📤 
-We are deeply engaged with the vLLM community on adding support for Mamba2 attention in a generic manner (th)
+We are deeply engaged with the vLLM community on adding support for Mamba2 attention. In our first release, we worked with various Mamba2 model developers to add support for tensor parallel support and reduce memory copies.
+
+We are currently working on three major updates:
+(a) **vLLM KV-cache management**: The allocation of pages and managing KV-cache is fundamentally different from that of transformer based models. We are working with the community toward achieving a generic solution that can handle any Hybrid model including Mamba2.
+(b) **Chunked prefill**: We are well aware that chunked prefill can give tremendous improvements in real workloads. While the current kernel works well for transformer based models, we need to implement a new kernel for Mamba2 based models.
+(c) **Faster decode kernels**: We are working on Triton implementation of the Conv1D kernel to ensure that the model can run in a performant manner on AMD GPUs as well. Further, we are exploring the fusion of the 4-5 kernels at decode time to reduce the latency of token generation even further.
+
+We anticipate that with the above changes, we can achieve a first class citizen support for Mamba2 based models and significantly better performance than what is today (2-2.5x for longer sequence lengths/larger batches).
 
 ## Call for Action 📢👉🚀
 We are committed to keeping open datasets with complete reproduction of our results. We call on the community to help improve the model on multiple fronts:

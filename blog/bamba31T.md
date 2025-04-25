@@ -5,7 +5,7 @@ During Christmas of 2024, IBM, Princeton, CMU, and UIUC [released](https://huggi
 ## Artifacts 📦
 1. [Hugging Face Bamba collection](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab) 
 2. [GitHub repo with inference, training, and tuning scripts](https://github.com/foundation-model-stack/bamba)
-3. [vLLM RFC](TODO)
+3. [vLLM RFC](https://github.com/vllm-project/vllm/issues/17140)
 
 ## Fast and Powerful ⚡🏎️ 
 
@@ -121,5 +121,5 @@ We anticipate that with the above changes, we can achieve a first class citizen 
 ## Call for Action 📢👉🚀
 We are committed to keeping open datasets with complete reproduction of our results. We call on the community to help improve the model on multiple fronts:
 1. Test time scaling and GRPO on the model
-2. Improve inference performance in vLLM (we expect 4-5x better than corresponding transformer models)
+2. Improve [inference performance in vLLM](https://github.com/vllm-project/vllm/issues/17140) (we expect 4-5x better than corresponding transformer models)
 3. Help us improve MATH skills!

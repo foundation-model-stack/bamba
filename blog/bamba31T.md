@@ -18,7 +18,7 @@ While the HF leaderboards themselves are [not active](https://huggingface.co/spa
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande | Boolq |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B v2](https://huggingface.co/ibm-ai-platform/Bamba-9B) | 62.39 | 67.89 | 63.65 | 40.11 | **83.7** | **50.2** | 83.13 | 51.67 | 79.48 | 82.81 |
+| [Bamba 9B v2](https://huggingface.co/ibm-ai-platform/Bamba-9B) | 62.63 | 67.92 | 63.57 | 41.70 | **83.85** | **51.0** | 83.62 | 50.86 | 79.48 | 82.78 |
 | [Nemotron-H 8B](https://huggingface.co/nvidia/Nemotron-H-8B-Base-8K) | 68.38 | 72.95 | 65.7 | 76.8 | 83.24 | 49.8 | **84.33** | 49.84 | **80.35** | **87.8** |
 | [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 60.79 | 66.26 | 57.85 | 49.96 | 81.98 | 46.8 | 82.54 | 45.16 | 77.51 | 82.66 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 63.99 | 63.96 | 64.51 | 68.01 | 81.93 | 49.2 | 81.39 | 43.32 | 770.3 | 84.77 |
@@ -30,7 +30,7 @@ While the HF leaderboards themselves are [not active](https://huggingface.co/spa
 
 | Model | Average | MMLU-PRO | BBH | GPQA | IFEval | MATH Lvl 5 | MuSR |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B](https://huggingface.co/ibm-ai-platform/Bamba-9B) | 14.86 | 25.07 | 23.51 | 8.17 | 18.76 | 6.57 | 7.09 |
+| [Bamba 9B](https://huggingface.co/ibm-ai-platform/Bamba-9B) | 15.14 | 25.41 | 24.78 | 5.93 | 19.00 | 6.42 | 9.28 |
 | [Nemotron-H 8B](https://huggingface.co/nvidia/Nemotron-H-8B-Base-8K) | 23.98 | 36.02 | 32.91 | 10.96 | 25.15 | **23.56** | **15.3** |
 | [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 14.45 | 25.46 | 25.16 | 8.61 | 12.55 | 6.19 | 8.72 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 13.4 | 22.79 | 21.69 | 4.92 | 16.35 | 4.61 | 10.02 |

@@ -123,3 +123,20 @@ We are committed to keeping open datasets with complete reproduction of our resu
 1. Test time scaling and GRPO on the model
 2. Improve [inference performance in vLLM](https://github.com/vllm-project/vllm/issues/17140) (we expect 4-5x better than corresponding transformer models)
 3. Help us improve MATH skills!
+
+## Contributors
+
+* **Data collection and curation**: We acknowledge and thank AllenAI team for making a high quality open source datasets Dolma, OlmoMix, and DolminoMix, Hugging Face data team for making FineWeb* and SmolLM corpus, and NVIDIA team for creating the Nemotron-CC. These are tremendous contributions which enabled us to create and improve the model.
+* **Data preprocessing**: We thank IBM's internal data preprocessing team, specifically Tuan Hoang Trong, Syed Zawad, Jay Gala, and Ryan Gordon for helping tokenize the data at scale. The code for tokenization is available [here](https://github.com/IBM/data-prep-kit).  
+* **Model architecture**: The model architecture design was jointly done by Princeton, CMU, IBM, and UIUC and involved the following folks: Tri Dao (Princeton), Albert Gu (CMU), Linsong Chu (IBM), Davis Wertheimer (IBM), Minjia Zhang (UIUC), Mudhakar Srivatsa (IBM), and Raghu Ganti (IBM).  
+* **Model training**: Model training was performed primarily by the IBM team using the Mamba2 kernels and layer implementation from Tri Dao and Albert Gu. The following folks from IBM were primarily involved: Linsong Chu, Divya Kumari, Davis Wertheimer, Raghu Ganti, and Dakshi Agrawal.  
+* **Model tuning**: Tuning of the model was enabled and verified in [TRL](https://github.com/huggingface/trl) by the IBM team, involving Sukriti Sharma and Anh Uong.  
+* **Model inference**: Model inference in `transformers`, `vLLM`, and `llama.cpp` builds on the kernels written by Princeton and CMU. The IBM team is working with the community to enable it in various ecosystems. The team includes Fabian Lim, Antoni viros i Martin, Adnan Hoque, Jamie Yang, Nelson Nimura Gonzalez, Joshua Rosenkranz, Nick Hill, and Gabe Goodhart.  
+* **Quantization**: Quantization is led by the IBM team \- Naigang Wang and Charlie Liu.  
+* **Evaluations**: Evaluations are led by a team in IBM with long context evaluations being performed by UIUC, involving the following folks: Yotam Perlitz, Ofir Arviv, Michal Shmueli-Scheuer (IBM), Haoechen Shen, and Minjia Zhang (UIUC).
+
+Finally, we would like to thank our leadership for their support in this effort \- Priya Nagpurkar, David Cox, Sriram Raghavan, Aya Soffer, Ruchir Puri, and Mukesh Khare.
+
+We would also like to thank the community - Hugging Face for transformers enablement and vLLM for inference optimizations.
+
+A huge shoutout to Meta PyTorch, AllenAI, and Hugging Face teams for their contributions to the open initative, PyTorch FSDP allowed us to smoothly train this model and the various high quality datasets that allowed us to update the model further! 

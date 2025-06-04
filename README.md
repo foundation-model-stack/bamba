@@ -25,11 +25,9 @@ issue with your env:
 
 ```bash
 git clone https://github.com/Dao-AILab/causal-conv1d.git
-cd causal-conv1d && pip install . && cd ..
+cd causal-conv1d && FORCE_BUILD=TRUE pip install . && cd ..
 git clone https://github.com/state-spaces/mamba.git
-cd mamba && pip install . && cd ..
-git clone https://github.com/Dao-AILab/flash-attention.git
-cd flash-attention && pip install . && cd ..
+cd mamba && MAMBA_FORCE_BUILD=TRUE pip install . && cd ..
 ```
 
 For users using our HF versions of the model, you would need to install the latest transformers which includes our newly merged implementation for our Bamba models:
@@ -72,123 +70,104 @@ For exact reproduction of Bamba 9.8B using the same training data, access is ava
 </td>
 <td><strong>Benchmark</strong>
 </td>
-<td><strong>Bamba 9B (2.2T)</strong>
+<td><strong>Bamba 9B (3.1T)</strong>
 </td>
 </tr>
 <tr>
-<td rowspan="8" >General
+<td rowspan="9" >General
 </td>
-<td>MMLU (5-shot)
+<td>MMLU
 </td>
-<td>60.77
-</td>
-</tr>
-<tr>
-<td>ARC-C (25-shot)
-</td>
-<td>63.23
+<td>67.92
 </td>
 </tr>
 <tr>
-<td>GSM8K (5-shot)
+<td>ARC-C
 </td>
-<td>36.77
-</td>
-</tr>
-<tr>
-<td>Hellaswag (10-shot)
-</td>
-<td>81.8
+<td>63.57
 </td>
 </tr>
 <tr>
-<td>OpenbookQA (5-shot)
+<td>GSM8K
 </td>
-<td>47.6
+<td>41.70	
+</td>
+</tr>
+<tr>
+<td>Hellaswag
+</td>
+<td>83.85	
+</td>
+</tr>
+<tr>
+<td>OpenbookQA
+</td>
+<td>51.0
 </td>
 </tr>
 <tr>
 <td>Piqa (5-shot)
 </td>
-<td>82.26
+<td>83.62
 </td>
 </tr>
 <tr>
 <td>TruthfulQA (0-shot)
 </td>
-<td>49.21
+<td>50.86
 </td>
 </tr>
 <tr>
 <td>Winogrande (5-shot)
 </td>
-<td>76.87
+<td>79.48	
+</td>
+</tr>
+<tr>
+<td>Boolq
+</td>
+<td>82.78
 </td>
 </tr>
 <tr>
 <td rowspan="6" >HF OpenLLM- V2*
 </td>
-<td>MMLU-PRO (5-shot)
+<td>MMLU-PRO
 </td>
-<td>17.53
-</td>
-</tr>
-<tr>
-<td>BBH (3-shot)
-</td>
-<td>17.4
+<td>25.41
 </td>
 </tr>
 <tr>
-<td>GPQA (0-shot)
+<td>BBH
 </td>
-<td>4.14
-</td>
-</tr>
-<tr>
-<td>IFEval (0-shot)
-</td>
-<td>15.16
+<td>24.78
 </td>
 </tr>
 <tr>
-<td>MATH Lvl 5 (4-shot)
+<td>GPQA
 </td>
-<td>1.66
-</td>
-</tr>
-<tr>
-<td>MuSR (0-shot)
-</td>
-<td>9.59
+<td>5.93
 </td>
 </tr>
 <tr>
-<td rowspan="4" >Safety Tasks
+<td>IFEval
 </td>
-<td>PopQA (5-shot)
-</td>
-<td>20.5
+<td>19.00
 </td>
 </tr>
 <tr>
-<td>Toxigen (5-shot)
+<td>MATH Lvl 5
 </td>
-<td>57.4
-</td>
-</tr>
-<tr>
-<td>BBQ (5-shot)
-</td>
-<td>44.2
+<td>6.42
 </td>
 </tr>
 <tr>
-<td>Crows-pairs english (5-shot)
+<td>MuSR
 </td>
-<td>70.78
+<td>9.28
 </td>
 </tr>
+<tr>
 </table>
 
 *For the v2 leaderboard results, we perform [normalization](https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization) and report the normalized results.

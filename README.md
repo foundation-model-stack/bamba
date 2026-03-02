@@ -6,11 +6,13 @@
 
 
 <p align="center">
-        🤗 <a href="https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab"> Bamba on Hugging Face</a>&nbsp | <a href="https://huggingface.co/blog/bamba"> Bamba Blog</a>&nbsp
+        🤗 <a href="https://huggingface.co/collections/ibm-ai-platform
+/bamba-674f1388b9bbc98b413c7bab"> Bamba on Hugging Face</a>&nbsp | <a href="https://huggingface.co/blog/bamba"> Bamba Blog</a>&nbsp
 <be>
 
 
-<!--Bamba is a repository for training and using [Bamba](https://huggingface.co/ibm-fms/Avengers-Mamba2-9B) models, which are derived from [Mamba](https://github.com/state-spaces/mamba) models.--> 
+<!--Bamba is a repository for training and using [Bamba](https://huggingface.co/ibm-ai-platform
+/Avengers-Mamba2-9B) models, which are derived from [Mamba](https://github.com/state-spaces/mamba) models.--> 
 
 Bamba-9B is a decoder-only language model based on the [Mamba-2](https://github.com/state-spaces/mamba) architecture and is designed to handle a wide range of text generation tasks. It is trained from scratch using a two-stage training approach. In the first stage, the model is trained on 2 trillion tokens from the Dolma v1.7 dataset. In the second stage, it undergoes additional training on 200 billion tokens, leveraging a carefully curated blend of high-quality data to further refine its performance and enhance output quality.
 
@@ -44,14 +46,17 @@ pip install git+https://github.com/huggingface/transformers.git
 | Bamba | 9B (9.78B) | 32       | 4096        | 32              | Yes  | 8        | 4096           | False           |
 
 ### Checkpoints
-You can find links to our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab)
+You can find links to our model checkpoints here: [Bamba Models](https://huggingface.co/collections/ibm-ai-platform
+/bamba-674f1388b9bbc98b413c7bab)
 
 ## Inference
 
 You can use the following command to perform text generation using one of our checkpoints provided above:
 
 ```python
-python text_generation.py --model_path ibm-fms/Bamba-9B --tokenizer_path ibm-fms/Bamba-9B --prompt "The largest living mammal on Earth is " --max_new_tokens 128
+python text_generation.py --model_path ibm-ai-platform
+/Bamba-9B --tokenizer_path ibm-ai-platform
+/Bamba-9B --prompt "The largest living mammal on Earth is " --max_new_tokens 128
 ```
 
 ## Training
@@ -247,7 +252,8 @@ make -j
 
 ### Conversion to GGUF
 
-You can use a pre-converted GGUF file from Huggingface (e.g. [bamba-9b.gguf](https://huggingface.co/ibm-fms/Bamba-9B/blob/main/bamba-9b.gguf)). If one doesn't exist, you can use the [convert_hf_to_gguf.py](https://github.com/gabe-l-hart/llama.cpp/blob/BambaArchitecture/convert_hf_to_gguf.py) script from Gabe's fork to perform the conversion manually.
+You can use a pre-converted GGUF file from Huggingface (e.g. [bamba-9b.gguf](https://huggingface.co/ibm-ai-platform
+/Bamba-9B/blob/main/bamba-9b.gguf)). If one doesn't exist, you can use the [convert_hf_to_gguf.py](https://github.com/gabe-l-hart/llama.cpp/blob/BambaArchitecture/convert_hf_to_gguf.py) script from Gabe's fork to perform the conversion manually.
 
 ```sh
 # Install the python dependencies

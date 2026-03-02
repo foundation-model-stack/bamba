@@ -90,8 +90,8 @@ In case you just want to run the benchmark as is and you do not want to use a mo
 harness_path="path/to/lm-evaluation-harness"
 python_path="python"
 lm_eval_script="${harness_path}/lm_eval"
-pretrained_model="ibm-fms/Bamba-9B"
-output_base_path="evaluation_results/debug/ibm-fms_Bamba-9B"
+pretrained_model="ibm-ai-platform/Bamba-9B"
+output_base_path="evaluation_results/debug/ibm-ai-platform_Bamba-9B"
 batch_size=4
 
 # Function to run lm_eval with common arguments

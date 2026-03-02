@@ -10,7 +10,8 @@ We introduce **Bamba-9B**, an inference-efficient Hybrid Mamba2 model trained by
 
 ## Artifacts 📦
 
-1. [Hugging Face Bamba collection](https://huggingface.co/collections/ibm-fms/bamba-674f1388b9bbc98b413c7bab) 
+1. [Hugging Face Bamba collection](https://huggingface.co/collections/ibm-ai-platform
+ibm-ai-platform/bamba-674f1388b9bbc98b413c7bab) 
 2. [GitHub repo with inference, training, and tuning scripts](https://github.com/foundation-model-stack/bamba)   
 3. [Data loader](https://github.com/foundation-model-stack/fms-fsdp/blob/main/fms_fsdp/utils/dataset_utils.py)  
 4. [Quantization](https://github.com/foundation-model-stack/fms-model-optimizer)  
@@ -32,8 +33,10 @@ To use Bamba with transformers, you can use the familiar `AutoModel` classes and
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model = AutoModelForCausalLM.from_pretrained("ibm-fms/Bamba-9B")
-tokenizer = AutoTokenizer.from_pretrained("ibm-fms/Bamba-9B")
+model = AutoModelForCausalLM.from_pretrained("ibm-ai-platform
+ibm-ai-platform/Bamba-9B")
+tokenizer = AutoTokenizer.from_pretrained("ibm-ai-platform
+ibm-ai-platform/Bamba-9B")
 
 message = ["Mamba is a snake with following properties  "]
 inputs = tokenizer(message, return_tensors='pt', return_token_type_ids=False)
@@ -67,7 +70,8 @@ We compare Bamba-9B with SoTA transformer models of similar size ([Meta Llama 3.
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
+| [Bamba 9B](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
 | [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 63.51 | 66.26 | 57.85 | 49.96 | 81.98 | 46.8 | 82.54 | 45.16 | 77.51 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 66.17 | 63.96 | 64.51 | 68.01 | 81.93 | **49.2** | 81.39 | 43.32 | 77.03 |
 | [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 67.47 | 65.45 | 63.74 | 62.55 | **83.29** | 47.6 | **83.41** | 52.89 | **80.82** |
@@ -79,7 +83,8 @@ We compare Bamba-9B with SoTA transformer models of similar size ([Meta Llama 3.
 
 | Model | Average | MMLU-PRO | BBH | GPQA | IFEval | MATH Lvl 5 | MuSR |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B](https://huggingface.co/ibm-fms/Bamba-9B) | 10.91 | 17.53 | 17.4 | 4.14 | 15.16 | 1.66 | 9.59 |
+| [Bamba 9B](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B) | 10.91 | 17.53 | 17.4 | 4.14 | 15.16 | 1.66 | 9.59 |
 | [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 14.27 | 25.46 | 25.16 | 8.61 | 12.55 | 5.14 | 8.72 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 13.36 | 22.79 | 21.69 | 4.92 | 16.35 | 4.38 | 10.02 |
 | [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 21.14 | 25.83 | 28.02 | 9.06 | **44.79** | 9.82 | 9.32 |
@@ -93,7 +98,8 @@ Safety benchmarks are crucial for ensuring AI models generate content that is et
 
 | Model | PopQA | Toxigen | BBQ  | Crow-SPairs* |
 | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B](https://huggingface.co/ibm-fms/Bamba-9B) | 20.5 | 57.4 | 44.2 | 70.8 |
+| [Bamba 9B](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B) | 20.5 | 57.4 | 44.2 | 70.8 |
 | [Meta Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | **28.77** | 67.02 | 59.97 | 70.84 |
 | [IBM Granite v3 8B](https://huggingface.co/ibm-granite/granite-3.0-8b-base) | 27.5 | **79.9** | **82.1** | 75 |
 | [Olmo2 7B](https://huggingface.co/allenai/OLMo-2-1124-7B) | 25.7 | 63.1 | 58.4 | 72 |
@@ -111,9 +117,11 @@ We pick a few prominent models: [Olmo 7B](https://huggingface.co/allenai/OLMo-7B
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B (2.2T)](https://huggingface.co/ibm-fms/Bamba-9B) | **62.31** | **60.77** | **63.23** | **36.77** | 81.8 | **47.6** | 82.26 | **49.21** | 76.87 |
+| [Bamba 9B (2.2T)](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B) | **62.31** | **60.77** | **63.23** | **36.77** | 81.8 | **47.6** | 82.26 | **49.21** | 76.87 |
 | [Olmo1.5 7B (2T)](https://huggingface.co/allenai/OLMo-7B-0424-hf) | 55.8 | 53.38 | 50.51 | 27.67 | 79.13 | 45.2 | 81.56 | 35.92 | 73.09 |
-| [Bamba 9B (2T)](https://huggingface.co/ibm-fms/Bamba-9B-2T) | 59.11 | 59.05 | 57.25 | 24.03 | **83.66** | 47.6 | **83.62** | 38.26 | **79.4** |
+| [Bamba 9B (2T)](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B-2T) | 59.11 | 59.05 | 57.25 | 24.03 | **83.66** | 47.6 | **83.62** | 38.26 | **79.4** |
 | [Meta Llama2 7B (2T)](https://huggingface.co/meta-llama/Llama-2-7b-hf) | 53.78 | 46.64 | 52.65 | 13.57 | 78.95 | 45.2 | 80.03 | 38.96 | 74.27 |
 | [IBM Granite 7B (2T)](https://huggingface.co/ibm-granite/granite-7b-base) | 52.07 | 49.02 | 49.91 | 10.84 | 77.0 | 40.8 | 80.14 | 38.7 | 70.17 |
 
@@ -132,7 +140,8 @@ Falcon Mamba is a pure Mamba model, Zamba has shared attention layer for every 6
 
 | Model | Average | MMLU | ARC-C | GSM8K | Hellaswag | OpenbookQA | Piqa | TruthfulQA | Winogrande |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| [Bamba 9B](https://huggingface.co/ibm-fms/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
+| [Bamba 9B](https://huggingface.co/ibm-ai-platform
+ibm-ai-platform/Bamba-9B) | 62.31 | 60.77 | 63.23 | 36.77 | 81.8 | 47.6 | 82.26 | 49.21 | 76.87 |
 | NVIDIA Mamba2 Hybrid 8B\* | 58.78 | 53.6 | 47.7 | 77.69 | \-- | 42.8 | 79.65 | 38.72 | 71.27 |
 | [Zamba 7B](https://huggingface.co/Zyphra/Zamba-7B-v1) | 64.36 | 57.85 | 55.38 | 61.33 | 82.27 | 46.8 | **82.21** | 49.69 | 79.32 |
 | [Falcon Mamba 7B](https://huggingface.co/tiiuae/falcon-mamba-7b) | **65.31** | **63.19** | **63.4** | **52.08** | 80.82 | **47.8** | **83.62** | **53.46** | **78.14** |

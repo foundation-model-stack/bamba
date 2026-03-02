@@ -16,7 +16,7 @@ dataset = load_dataset("lucasmccabe-lmi/CodeAlpaca-20k", split="train")
 
 # We load the model and the tokenizer
 # TODO: change path to bamba model when uploaded
-model_path = "ibm-fms/Bamba-9B"
+model_path = "ibm-ai-platform/Bamba-9B"
 model = AutoModelForCausalLM.from_pretrained(model_path)
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 

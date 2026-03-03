@@ -83,7 +83,7 @@ if __name__ == "__main__":
         .replace("-hf", "")
         .replace("-2T", "-2.0T")
         .replace("9B-fp8", "9B-2.2T-fp8")
-        .replace("ibm-fms/", "")
+        .replace("ibm-ai-platform/", "")
         .replace("instruct_models/", "")
         .replace("Bamba_annealed_models/", "")
     )

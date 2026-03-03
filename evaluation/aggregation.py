@@ -102,7 +102,7 @@ def get_results_df(res_dir_paths, results_from_papers_path=None):
 
     res_df["score"] = res_df["score"].round(2)
     res_df["model"] = res_df["model"].apply(
-        lambda x: x.replace("/dccstor/fme/users/yotam/models/", "ibm-fms/")
+        lambda x: x.replace("/dccstor/fme/users/yotam/models/", "ibm-ai-platform/")
     )
 
     # df_pivot_score.to_csv("output/combined_results.csv", index=False)
